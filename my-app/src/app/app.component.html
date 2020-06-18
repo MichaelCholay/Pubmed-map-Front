@@ -338,6 +338,19 @@
 
   </div>
 
+  <!-- ArticlesList -->
+  <div class="ArticlesList">
+  <h2>Articlesssss via Microservice</h2>
+  <ol>
+    <li *ngFor="let article of articles">{{article.authorsList[0].lastName}} {{article.authorsList[0].foreName}}</li>
+  </ol>
+</div>
+
+<!-- <h1>Articles via Microservice</h1>
+<div *ngFor="let article of articles">
+  <h2>{{article.pmid}}</h2>
+</div> -->
+
   <!-- Resources -->
   <h2>Resources</h2>
   <p>Here are some links to help you get started:</p>
