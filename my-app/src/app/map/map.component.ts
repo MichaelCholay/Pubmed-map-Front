@@ -57,7 +57,8 @@ export class MapComponent implements OnInit {
       "black map": CartoDB_DarkMatterNoLabels
     }, {}));
 
-
+    //test ajout marker
+    L.marker([52.1754386, 0.132827],{title: 'test'}).addTo(mymap)
 
 
     // add icon
