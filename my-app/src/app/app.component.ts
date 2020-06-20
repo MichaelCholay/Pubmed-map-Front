@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Article } from "./common/model/article";
 import { ArticlesApiService } from "./common/service/articles-api.service";
 
 

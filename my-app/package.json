@@ -20,7 +20,10 @@
     "@angular/platform-browser-dynamic": "~9.1.9",
     "@angular/router": "~9.1.9",
     "@types/leaflet": "^1.5.12",
+    "@types/leaflet-geosearch": "^2.7.1",
     "leaflet": "^1.6.0",
+    "leaflet-geosearch": "^3.0.6",
+    "leaflet-search": "^2.9.8",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
