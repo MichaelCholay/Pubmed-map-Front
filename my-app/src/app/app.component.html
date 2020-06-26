@@ -11,7 +11,15 @@
   <div class="ArticlesList">
   <h2>Articlesssss via Microservice</h2>
   <ol>
-    <li *ngFor="let article of articles">{{article.pmid}} {{article.authorsList[0].affiliation1}}</li>
+    <li *ngFor="let article of articles">{{article.pmid}} {{article.authorsList[0].lastName}}</li>
+  </ol>
+</div>
+
+<!-- GeolocList -->
+<div class="GeolocList">
+  <h2>Geoloc via Microservice</h2>
+  <ol>
+    <li *ngFor="let geolocIndex of geoloc">{{geolocIndex.pmid}} {{geolocIndex.latitude}} {{geolocIndex.longitude}}</li>
   </ol>
 </div>
 
