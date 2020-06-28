@@ -4,7 +4,7 @@ import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
 import { GoogleProvider } from 'leaflet-geosearch';
 import { ArticlesApiService } from '../common/service/articles-api.service';
 import { GeolocService } from '../common/service/geoloc.service';
-
+import "leaflet.markercluster";
 
 
 @Component({
@@ -71,6 +71,10 @@ export class MapComponent implements OnInit {
     //test ajout marker
     // L.marker([42.36373469999999, -71.1609714],{title: 'test'}).addTo(mymap)
 
+    // add markerCluster
+    var markerCluster = new L.MarkerClusterGroup()
+
+    
     this.geolocService.getAllGeoloc().subscribe(data => {
       //this.latitude = data[0].latitude
       this.geoloc = data
@@ -80,22 +84,29 @@ export class MapComponent implements OnInit {
       for (var i in this.geoloc) {
         // for (var i = 0; i < this.geoloc.length; i++) {
         console.log(`marker: ${this.geoloc.length}`)
-        console.log(`marker: ${this.geoloc[i].pmid} - ${this.geoloc[i].latitude} - ${this.geoloc[i].longitude}`)
-        L.marker(L.latLng(this.geoloc[i].latitude, this.geoloc[i].longitude))
-          .bindPopup(this.geoloc[i].pmid.toString())
-          .addTo(mymap)
+        // console.log(`marker: ${this.geoloc[i].pmid} - ${this.geoloc[i].latitude} - ${this.geoloc[i].longitude}`)
+        var marker = L.marker(L.latLng(this.geoloc[i].latitude, this.geoloc[i].longitude), {title: this.geoloc[i].pmid, icon: myIcon})
+        .bindPopup(this.geoloc[i].pmid.toString())
+        //.addTo(mymap)
+        markerCluster.addLayer(marker)
       }
+      mymap.addLayer(markerCluster)
     })
+    // add icon
+    var myIcon = L.icon({
+      iconUrl: 'assets/pins/bluepin.png',
+      iconSize: [50,50],
+      iconAnchor: [25,50]
+    });
+
+
   }
   // mymap.panTo(L.latLng(this.geoloc[0].latitude,this.geoloc[0].longitude))
   // })
 
 
 
-  // add icon
-  // const myIcon = L.icon({
-  //   iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/images/marker-icon.png'
-  // });
+
   // L.marker([50.6311634, 3.0599573], { icon: myIcon }).bindPopup('Marqueur').addTo(mymap).openPopup();
 
   // add a search bar for adress
