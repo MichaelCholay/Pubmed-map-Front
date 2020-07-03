@@ -10,23 +10,23 @@ import { GeolocService } from './common/service/geoloc.service';
 })
 export class AppComponent implements OnInit {
   title = 'Pubmed World';
-  articles;
-  geoloc = []
+  articles = [];
+
   
 
-  constructor(private articlesApiService: ArticlesApiService, private geolocService: GeolocService) {
+  constructor(private articlesApiService: ArticlesApiService) {
 
    }
 
   ngOnInit() {
-    // this.articlesApiService.getAllArticles().subscribe(data => {
-    //   this.articles = data
-    // console.log(this.articles)
-    // })
-
-    this.geolocService.getAllGeoloc().subscribe(data => {
-      this.geoloc = data
+    this.articlesApiService.getAllArticles().subscribe(data => {
+      this.articles = data
+    console.log(this.articles)
     })
+
+    // this.geolocService.getAllGeoloc().subscribe(data => {
+    //   this.geoloc = data
+    // })
   }
 }
 

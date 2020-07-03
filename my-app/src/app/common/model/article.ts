@@ -4,7 +4,7 @@ export interface Article {
     pmid: number;
     articleTitle: string;
     journal: string;
-    publicationDate: Date;
+    // publicationDate: Date;
     revisionDate: Date;
     articleAbstract: String;
     pubmedUrl: string;

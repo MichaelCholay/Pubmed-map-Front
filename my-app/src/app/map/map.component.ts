@@ -3,7 +3,7 @@ import * as L from 'leaflet';
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
 import { GoogleProvider } from 'leaflet-geosearch';
 import { ArticlesApiService } from '../common/service/articles-api.service';
-import { GeolocService } from '../common/service/geoloc.service';
+// import { GeolocService } from '../common/service/geoloc.service';
 import "leaflet.markercluster";
 
 
@@ -13,13 +13,13 @@ import "leaflet.markercluster";
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit {
-  geoloc = []
-  latitude
+  articles = []
+  // latitude : number
   // [[123,-40.99497,174.50808],
   // [456,-41.30269,173.63696],
   // [789,-41.49413,173.5421]]
 
-  constructor(private geolocService: GeolocService) { }
+  constructor(private articlesApiService: ArticlesApiService) { }
 
   ngOnInit(): void {
 
@@ -74,29 +74,28 @@ export class MapComponent implements OnInit {
     // add markerCluster
     var markerCluster = new L.MarkerClusterGroup()
 
-    
-    this.geolocService.getAllGeoloc().subscribe(data => {
-      //this.latitude = data[0].latitude
-      this.geoloc = data
-      console.log(this.geoloc)
-      //var latLng = [this.geoloc[0][1],this.geoloc[0][2]]
-      // console.log("latLng:" + this.geoloc[0].latitude)
-      for (var i in this.geoloc) {
-        // for (var i = 0; i < this.geoloc.length; i++) {
-        console.log(`marker: ${this.geoloc.length}`)
-        // console.log(`marker: ${this.geoloc[i].pmid} - ${this.geoloc[i].latitude} - ${this.geoloc[i].longitude}`)
-        var marker = L.marker(L.latLng(this.geoloc[i].latitude, this.geoloc[i].longitude), {title: this.geoloc[i].pmid, icon: myIcon})
-        .bindPopup(this.geoloc[i].pmid.toString())
-        //.addTo(mymap)
-        markerCluster.addLayer(marker)
+    this.articlesApiService.getAllArticles().subscribe(data => {
+      this.articles = data
+      console.log(this.articles)
+      for (var i in this.articles) {
+        for (var j in this.articles[i].authorsList) {
+          if (this.articles[i].authorsList[j].latitude != 0 && this.articles[i].authorsList[j].longitude != 0) {
+          var marker = L.marker(L.latLng(this.articles[i].authorsList[j].latitude, this.articles[i].authorsList[j].longitude), { title: this.articles[i].articleTitle, icon: myIcon })
+            .bindPopup(this.articles[i].pmid.toString())
+          //.addTo(mymap)
+          markerCluster.addLayer(marker)
+          }
+        }
       }
       mymap.addLayer(markerCluster)
     })
+
+    
     // add icon
     var myIcon = L.icon({
       iconUrl: 'assets/pins/bluepin.png',
-      iconSize: [50,50],
-      iconAnchor: [25,50]
+      iconSize: [50, 50],
+      iconAnchor: [25, 50]
     });
 
 

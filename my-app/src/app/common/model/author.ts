@@ -4,7 +4,9 @@ export interface Author {
 
     lastName: string;
 	foreName: string;
-	affiliation1: Affiliation;
-	affiliation2: Affiliation;
+	affiliationPubmed: string;
+	googleFormatedAdress: string;
 	email: string;
+	latitude: number;
+	longitude: number;
 }
