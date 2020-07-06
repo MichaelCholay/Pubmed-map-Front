@@ -32,20 +32,21 @@ export class MapComponent implements OnInit {
     // List of layers
     var Esri_WorldGrayCanvas = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
       attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
-      maxZoom: 16,
-      minZoom: 1
+      maxZoom: 19,
+      minZoom: 2
     });
 
     var Esri_WorldStreetMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
       attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012',
-      minZoom: 1
+      maxZoom: 19,
+      minZoom: 2
     });
 
     var CartoDB_DarkMatterNoLabels = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
       subdomains: 'abcd',
       maxZoom: 19,
-      minZoom: 1
+      minZoom: 2
     });
 
     //Control of layers
@@ -82,7 +83,7 @@ export class MapComponent implements OnInit {
             //  console.log("geoloc: " + this.geoloc)
             const popupInfo = `<center><span class='author'> ${this.articles[i].authorsList[j].lastName} ${this.articles[i].authorsList[j].foreName}</span><br>
             <span class='adress'> ${this.articles[i].authorsList[j].googleFormatedAdress}</span><br><br>
-            <a class="btn btn-outline-secondary btn-sm" data-toggle="collapse" href="#articleDetails" >More Details</a><center> `
+            <a class="btn btn-outline-secondary btn-sm" data-toggle="collapse" href="${this.articles[i].pubmedUrl}" target="_blank" rel="noopener noreferrer" >More Details</a><center> `
             var marker = L.marker(L.latLng(this.articles[i].authorsList[j].latitude, this.articles[i].authorsList[j].longitude), { /*title: this.articles[i].articleTitle,*/ icon: this.myIcon, riseOnHover: true })
               .bindPopup(popupInfo, this.customOptions)
               .on('mouseover', function (e) { this.openPopup(); });
