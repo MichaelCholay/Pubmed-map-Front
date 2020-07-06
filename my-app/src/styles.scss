@@ -1,1 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+.customPopupMarker .leaflet-popup-content-wrapper {
+    background:darkgray;
+    color: #eee;
+    // font-weight: bold;
+    font-size: 12px;
+    line-height: 24px;
+    border-radius: 10px;
+}
+
+.customPopupMarker .mypopup.leaflet-popup-tip {
+    background: red;
+}
+
+.author { font-size: 14px; font-weight: bold;}

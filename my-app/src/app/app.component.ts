@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.articlesApiService.getAllArticles().subscribe(data => {
       this.articles = data
-    console.log(this.articles)
+    // console.log(this.articles)
     })
 
     // this.geolocService.getAllGeoloc().subscribe(data => {

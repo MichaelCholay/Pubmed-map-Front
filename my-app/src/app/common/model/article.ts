@@ -1,7 +1,7 @@
 import { Author } from "./author";
 
 export interface Article {
-    pmid: number;
+    _id: number;
     articleTitle: string;
     journal: string;
     // publicationDate: Date;

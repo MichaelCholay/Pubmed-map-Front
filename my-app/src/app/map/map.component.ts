@@ -5,6 +5,8 @@ import { GoogleProvider } from 'leaflet-geosearch';
 import { ArticlesApiService } from '../common/service/articles-api.service';
 // import { GeolocService } from '../common/service/geoloc.service';
 import "leaflet.markercluster";
+import { Article } from '../common/model/article';
+import { Geoloc } from '../common/model/geoloc';
 
 
 @Component({
@@ -14,28 +16,14 @@ import "leaflet.markercluster";
 })
 export class MapComponent implements OnInit {
   articles = []
-  // latitude : number
-  // [[123,-40.99497,174.50808],
-  // [456,-41.30269,173.63696],
-  // [789,-41.49413,173.5421]]
+  article: Article
+  articlePmid: string
+  markerslist = []
+  geoloc: Geoloc
 
   constructor(private articlesApiService: ArticlesApiService) { }
 
   ngOnInit(): void {
-
-
-    // essai de carte avec tuto Leaflet https://leafletjs.com/examples/quick-start/
-    //     var mymap = L.map('mapid').setView([51.505, -0.09], 13);
-    //   L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-    //     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    //     maxZoom: 18,
-    //     id: 'mapbox/streets-v11',
-    //     tileSize: 512,
-    //     zoomOffset: -1,
-    //     accessToken: 'pk.eyJ1IjoiZHJtY3kiLCJhIjoiY2tibGViZmtjMTg5NzJ5bzU5ZGVpcWlieSJ9.WCqktMpcC1jCc4CG3QFtWA'
-    // }).addTo(mymap);
-    //   }
-
 
 
     // Set map on Paris
@@ -71,35 +59,91 @@ export class MapComponent implements OnInit {
     //test ajout marker
     // L.marker([42.36373469999999, -71.1609714],{title: 'test'}).addTo(mymap)
 
+
+
     // add markerCluster
     var markerCluster = new L.MarkerClusterGroup()
+
 
     this.articlesApiService.getAllArticles().subscribe(data => {
       this.articles = data
       console.log(this.articles)
-      for (var i in this.articles) {
-        for (var j in this.articles[i].authorsList) {
+    }, (error) => {
+      console.log(error)
+    }, () => {
+      console.log("end of subscribe")
+
+      for (let i in this.articles) {
+        for (let j in this.articles[i].authorsList) {
+          // for (let i = 0; i < this.articles.length; i++) {
+          //   for (let j = 0; j < this.articles[i].authorsList.length; j++) {
           if (this.articles[i].authorsList[j].latitude != 0 && this.articles[i].authorsList[j].longitude != 0) {
-          var marker = L.marker(L.latLng(this.articles[i].authorsList[j].latitude, this.articles[i].authorsList[j].longitude), { title: this.articles[i].articleTitle, icon: myIcon })
-            .bindPopup(this.articles[i].pmid.toString())
-          //.addTo(mymap)
-          markerCluster.addLayer(marker)
+            //  this.geoloc.articleTitle = this.articles[i].articleTitle
+            //  console.log("geoloc: " + this.geoloc)
+            const popupInfo = `<center><span class='author'> ${this.articles[i].authorsList[j].lastName} ${this.articles[i].authorsList[j].foreName}</span><br>
+            <span class='adress'> ${this.articles[i].authorsList[j].googleFormatedAdress}</span><br><br>
+            <a class="btn btn-outline-secondary btn-sm" data-toggle="collapse" href="#articleDetails" >More Details</a><center> `
+            var marker = L.marker(L.latLng(this.articles[i].authorsList[j].latitude, this.articles[i].authorsList[j].longitude), { /*title: this.articles[i].articleTitle,*/ icon: this.myIcon, riseOnHover: true })
+              .bindPopup(popupInfo, this.customOptions)
+              .on('mouseover', function (e) { this.openPopup(); });
+            // .bindPopup(`${this.articles[i].authorsList[j].lastName} ${this.articles[i].authorsList[j].foreName} ${this.articles[i]._id}`, this.customOptions)
+            // marker.addEventListener("click", function () { this.getDataArticle(this.articles[i]) })
+            markerCluster.addLayer(marker)
           }
         }
       }
-      mymap.addLayer(markerCluster)
     })
-
-    
-    // add icon
-    var myIcon = L.icon({
-      iconUrl: 'assets/pins/bluepin.png',
-      iconSize: [50, 50],
-      iconAnchor: [25, 50]
-    });
+    mymap.addLayer(markerCluster)
 
 
   }
+  // add icon
+  myIcon = L.icon({
+    iconUrl: 'assets/pins/bluepin.png',
+    iconSize: [40, 50],
+    iconAnchor: [20, 20]
+  });
+
+  //cutom popup
+  customPopup = "<center><b style='color:yellow'>DETRI AMELIA CHANDRA</b><br>Jl. Rowo Bening, Perum. Tiga Putri Tahap III<div class='waseman'><a href='https://facebook.com/idet.ambun' target='_blank' class='facebook' style='color:#fff;'><i class='fa fa-facebook'></i></a> <a href='https://twitter.com/detriamelia' target='_blank' class='twitter' style='color:#fff;'><i class='fa fa-twitter'></i></a> <a href='https://www.instagram.com/detriamelia/' target='_blank' class='instagram' style='color:#fff;'><i class='fa fa-instagram'></i></a> <a href='https://web.telegram.org/#/im?p=u687504930_6230769115732589639' class='telegram' style='color:#fff;'><i class='fa fa-whatsapp'></i></a></div></center>";
+
+  customOptions = {
+    'maxWidth': 1000,
+    'className': 'customPopupMarker',
+    closeButton: true,
+    autoClose: true
+  }
+
+  getDataArticle(article: Article) {
+    this.articlePmid = article._id.toString()
+    this.articlesApiService.getIdArticle(this.articlePmid).subscribe(
+      data => { this.article = data }
+    )
+  }
+
+  // bindMarker(){
+  //   L.In.("click", function () { this.getDataArticle(this.articles[i]) })
+  // }
+
+  //   onClick(e) {
+  //     alert(e.layer.latLng);
+  // }
+
+  // get id of an article 
+  // getArticlePmid(article: Article) {
+  //   console.log(this.articlePmid)
+  // this.articlePmid = article._id.toString()
+  // sessionStorage.setItem("id", this.articlePmid)
+  // this._router.navigate(['/articleDetails', this.articlePmid])
+  // }
+
+
+  // find an article by id
+  // findArticlebyPmid(id: string) {
+  //   this.articlesApiService.getIdArticle(id).subscribe(
+  //     data => { this.article = data }
+  //   )
+  // }
   // mymap.panTo(L.latLng(this.geoloc[0].latitude,this.geoloc[0].longitude))
   // })
 
