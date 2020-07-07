@@ -18,5 +18,7 @@ phases:
     commands:
       - echo Build completed on `date`
 artifacts:
-  files:
-    - 'my-app/dist/*'
+    files:
+      - '**/*'
+    base-directory: 'dist*'
+    discard-paths: yes
