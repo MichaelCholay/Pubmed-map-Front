@@ -22,11 +22,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.info = {
-      token: this.token.getToken(),
-      username: this.token.getUsername(),
-      authorities: this.token.getAuthorities()
-    };
 
     if (this.token.getToken()) {
       this.roles = this.token.getAuthorities();
@@ -34,14 +29,22 @@ export class AppComponent implements OnInit {
         if (role === 'ROLE_ADMIN') {
           this.authority = 'admin';
           return false;
-        } else if (role === 'ROLE_PM') {
-          this.authority = 'pm';
-          return false;
-        }
-        this.authority = 'user';
+        // } else if (role === 'ROLE_PM') {
+        //   this.authority = 'pm';
+        //   return false;
+        // }
+         } else this.authority = 'user';
         return true;
       });
     }
+
+    this.info = {
+      token: this.token.getToken(),
+      username: this.token.getUsername(),
+      authorities: this.token.getAuthorities()
+    };
+
+    
 
     this.articlesApiService.getAllArticles().subscribe(data => {
       this.articles = data

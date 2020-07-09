@@ -4,12 +4,14 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { UserComponent } from './user/user.component';
 import { AppComponent } from './app.component';
+import { markerClusterGroup } from 'leaflet';
+import { MapComponent } from './map/map.component';
 
 
 const routes: Routes = [
   {
-    path: 'app',
-    component: AppComponent
+    path: '',
+    component: MapComponent
 },
 {
     path: 'user',
@@ -33,7 +35,7 @@ const routes: Routes = [
 },
 {
     path: '',
-    redirectTo: 'app',
+    redirectTo: '',
     pathMatch: 'full'
 }
 ];

@@ -14,6 +14,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { UserComponent } from './user/user.component';
 import { httpInterceptorProviders } from './common/model/auth/auth-interceptor';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { httpInterceptorProviders } from './common/model/auth/auth-interceptor';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]

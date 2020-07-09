@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class UserService {
  
-  private userUrl = './auth-api/test/user';
+  private userUrl = './api-auth/test/user';
   // private pmUrl = './auth-api/test/pm';
   // private adminUrl = './auth-api/test/admin';
  
