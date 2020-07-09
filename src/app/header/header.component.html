@@ -14,17 +14,12 @@
           <a class="navbar-brand" href="#">Pubmed-Map !!!</a>
         </div>
         <ul class="nav navbar-nav navbar-right" routerLinkActive="active">
-          <!-- <li class="nav-item"><a class="nav-link" routerLink="app">Home</a></li> -->
           <li><a href="signup"><span class="fa fa-user-circle" aria-hidden="true"></span> Sign Up</a></li>
           <li *ngIf="authority === 'user'" class="nav-item">
             <a class="nav-link" routerLink="user">User Board</a>
           </li>
-          <!-- <li *ngIf="authority === 'admin'" class="nav-item">
-            <a class="nav-link" routerLink="admin">Admin Board</a>
-          </li> -->
           <li><a href="auth/login"><span class="fa fa-sign-in" aria-hidden="true"></span> Login</a></li>
           <li *ngIf="!authority" class="nav-item">
-            <!-- <a class="nav-link" routerLink="auth/login">Login</a> -->
           </li>
         </ul>
       </div>

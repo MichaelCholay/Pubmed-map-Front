@@ -106,7 +106,7 @@ export class MapComponent implements OnInit {
   });
 
   //cutom popup
-  customPopup = "<center><b style='color:yellow'>DETRI AMELIA CHANDRA</b><br>Jl. Rowo Bening, Perum. Tiga Putri Tahap III<div class='waseman'><a href='https://facebook.com/idet.ambun' target='_blank' class='facebook' style='color:#fff;'><i class='fa fa-facebook'></i></a> <a href='https://twitter.com/detriamelia' target='_blank' class='twitter' style='color:#fff;'><i class='fa fa-twitter'></i></a> <a href='https://www.instagram.com/detriamelia/' target='_blank' class='instagram' style='color:#fff;'><i class='fa fa-instagram'></i></a> <a href='https://web.telegram.org/#/im?p=u687504930_6230769115732589639' class='telegram' style='color:#fff;'><i class='fa fa-whatsapp'></i></a></div></center>";
+  // customPopup = "<center><b style='color:yellow'>DETRI AMELIA CHANDRA</b><br>Jl. Rowo Bening, Perum. Tiga Putri Tahap III<div class='waseman'><a href='https://facebook.com/idet.ambun' target='_blank' class='facebook' style='color:#fff;'><i class='fa fa-facebook'></i></a> <a href='https://twitter.com/detriamelia' target='_blank' class='twitter' style='color:#fff;'><i class='fa fa-twitter'></i></a> <a href='https://www.instagram.com/detriamelia/' target='_blank' class='instagram' style='color:#fff;'><i class='fa fa-instagram'></i></a> <a href='https://web.telegram.org/#/im?p=u687504930_6230769115732589639' class='telegram' style='color:#fff;'><i class='fa fa-whatsapp'></i></a></div></center>";
 
   customOptions = {
     'maxWidth': 1000,

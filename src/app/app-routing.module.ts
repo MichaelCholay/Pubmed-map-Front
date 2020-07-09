@@ -17,14 +17,6 @@ const routes: Routes = [
     path: 'user',
     component: UserComponent
 },
-// {
-//     path: 'pm',
-//     component: PmComponent
-// },
-// {
-//     path: 'admin',
-//     component: AdminComponent
-// },
 {
     path: 'auth/login',
     component: LoginComponent

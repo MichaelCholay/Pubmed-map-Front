@@ -6,9 +6,5 @@
     "/api-auth": {
         "secure": "false",
         "target": "http://localhost:9997"
-    },
-    "/geoloc-api": {
-        "secure": "false",
-        "target": "http://localhost:9997"
     }
 }

@@ -12,12 +12,11 @@ import { Geoloc } from '../model/geoloc';
 @Injectable()
 export class ArticlesApiService {
   articles: Article[];
-  localhostPortUrl: "http://localhost:9998"
 
   constructor(private httpClient: HttpClient) { }
 
   getAllArticles(): Observable<Article[]> {
-    let allArticlesUrl = `${this.localhostPortUrl}/article-api/public/articles`
+    let allArticlesUrl = './article-api/public/articles'
     return this.httpClient.get<Article[]>(allArticlesUrl)/*.pipe(
       map(
         (jsonArray: Object[]) => jsonArray.map(jsonItem => Geoloc.fromJson(jsonItem))
@@ -26,7 +25,7 @@ export class ArticlesApiService {
   }
 
   public getIdArticle(articleId: string) : Observable<Article>{
-    let url = `${this.localhostPortUrl}/article-api/public/article/pmid/${articleId}`;
+    let url = "./article-api/public/article/pmid/"+ articleId;
     return this.httpClient.get<Article>(url);
   }
   

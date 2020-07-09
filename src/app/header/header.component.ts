@@ -22,20 +22,20 @@ export class HeaderComponent implements OnInit {
     //   authorities: this.token.getAuthorities()
     // };
 
-    if (this.token.getToken()) {
-      this.roles = this.token.getAuthorities();
-      this.roles.every(role => {
-        if (role === 'ROLE_ADMIN') {
-          this.authority = 'admin';
-          return false;
-        // } else if (role === 'ROLE_PM') {
-        //   this.authority = 'pm';
-        //   return false;
-        // }
-         } else this.authority = 'user';
-        return true;
-      });
-    }
+    // if (this.token.getToken()) {
+    //   this.roles = this.token.getAuthorities();
+    //   this.roles.every(role => {
+    //     if (role === 'ROLE_ADMIN') {
+    //       this.authority = 'admin';
+    //       return false;
+    //     // } else if (role === 'ROLE_PM') {
+    //     //   this.authority = 'pm';
+    //     //   return false;
+    //     // }
+    //      } else this.authority = 'user';
+    //     return true;
+    //   });
+    // }
   }
 
   // logout() {
