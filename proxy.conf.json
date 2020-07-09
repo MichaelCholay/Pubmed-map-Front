@@ -1,5 +1,14 @@
-{ "/article-api" : { "secure" : "false" ,
-    "target" : "http://localhost:9998" },
-"/geoloc-api" : { "secure" : "false" ,
-    "target" : "http://localhost:9997" } 
+{
+    "/article-api": {
+        "secure": "false",
+        "target": "http://localhost:9998"
+    },
+    "/api-auth": {
+        "secure": "false",
+        "target": "http://localhost:9997"
+    },
+    "/geoloc-api": {
+        "secure": "false",
+        "target": "http://localhost:9997"
+    }
 }
