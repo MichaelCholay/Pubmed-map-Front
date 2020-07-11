@@ -20,6 +20,10 @@ export class MapComponent implements OnInit {
   articlePmid: string
   markerslist = []
   geoloc: Geoloc
+  marker = L.marker
+  markerCluster = new L.MarkerClusterGroup()
+
+
 
   constructor(private articlesApiService: ArticlesApiService) { }
 
@@ -84,20 +88,21 @@ export class MapComponent implements OnInit {
             const popupInfo = `<center><span class='author'> ${this.articles[i].authorsList[j].lastName} ${this.articles[i].authorsList[j].foreName}</span><br>
             <span class='adress'> ${this.articles[i].authorsList[j].googleFormatedAdress}</span><br><br>
             <a class="btn btn-outline-secondary btn-sm" data-toggle="collapse" href="${this.articles[i].pubmedUrl}" target="_blank" rel="noopener noreferrer" >More Details</a><center> `
-            var marker = L.marker(L.latLng(this.articles[i].authorsList[j].latitude, this.articles[i].authorsList[j].longitude), { /*title: this.articles[i].articleTitle,*/ icon: this.myIcon, riseOnHover: true })
+            let marker = L.marker(L.latLng(this.articles[i].authorsList[j].latitude, this.articles[i].authorsList[j].longitude), { /*title: this.articles[i].articleTitle,*/ icon: this.myIcon, riseOnHover: true })
+              .on("click", this.showDetailsCard)
               .bindPopup(popupInfo, this.customOptions)
               .on('mouseover', function (e) { this.openPopup(); });
             // .bindPopup(`${this.articles[i].authorsList[j].lastName} ${this.articles[i].authorsList[j].foreName} ${this.articles[i]._id}`, this.customOptions)
             // marker.addEventListener("click", function () { this.getDataArticle(this.articles[i]) })
+
             markerCluster.addLayer(marker)
           }
         }
       }
     })
     mymap.addLayer(markerCluster)
-
-
   }
+
   // add icon
   myIcon = L.icon({
     iconUrl: 'assets/pins/bluepin.png',
@@ -120,6 +125,27 @@ export class MapComponent implements OnInit {
     this.articlesApiService.getIdArticle(this.articlePmid).subscribe(
       data => { this.article = data }
     )
+  }
+
+  showDetailsCard() {
+    let card = document.getElementById("articleDetails");
+    if (getComputedStyle(card).display != "none") {
+      card.style.display = "none";
+    } else {
+      card.style.display = "block";
+    }
+  }
+
+  closeDetailsCard() {
+    let closeButton = document.getElementById("closeButton");
+    let card = document.getElementById("articleDetails");
+    closeButton.onclick = function(){
+      console.log("close")
+      card.style.display = "none";
+    }
+    // if (getComputedStyle(card).display != "none") {
+    //   card.style.display = "none";
+    // }
   }
 
   // bindMarker(){

@@ -3,10 +3,15 @@
 <div id="mapid"></div>
 
 <div class="card" id="articleDetails">
+
     <div class="card bg-light mb-3" style="width: 18rem;">
-          <button type="button" class="btn btn-default btn-lg">
+        <div class="closeButton">
+            <button class="fa fa-window-close" aria-hidden="true" id="closeButton" (onclick)="closeDetailsCard">
+            </button>
+        </div>
+        <button type="button" class="btn btn-default btn-lg">
             <span class="glyphicon glyphicon-star-empty" aria-hidden="true"> Add to favorite</span>
-          </button>
+        </button>
         <div class="card-header border-secondary mb-3">
             <ul class="nav nav-tabs card-header-tabs">
                 <li class="nav-item">
@@ -24,7 +29,7 @@
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
                     card's content.</p>
                 <a href="#" class="btn btn-primary">Go to pubmed</a>
-                
+
                 <div class="card-footer border-light mb-3">Footer</div>
             </div>
             <div class="tab-pane card-body" id="abstract">
