@@ -7,15 +7,9 @@ import { Observable } from 'rxjs';
 })
 export class UserService {
  
-<<<<<<< HEAD
   private userUrl = './api-auth/test/user';
   // private pmUrl = './auth-api/test/pm';
   // private adminUrl = './auth-api/test/admin';
-=======
-  private userUrl = 'http://localhost:9997/api-auth/test/user';
-  private pmUrl = 'http://localhost:9997/api-auth/test/pm';
-  private adminUrl = 'http://localhost:9997/api-auth/test/admin';
->>>>>>> dev_V0.5.5
  
   constructor(private http: HttpClient) { }
  
@@ -23,7 +17,6 @@ export class UserService {
     return this.http.get(this.userUrl, { responseType: 'text' });
   }
  
-<<<<<<< HEAD
   // getPMBoard(): Observable<string> {
   //   return this.http.get(this.pmUrl, { responseType: 'text' });
   // }
@@ -31,13 +24,4 @@ export class UserService {
   // getAdminBoard(): Observable<string> {
   //   return this.http.get(this.adminUrl, { responseType: 'text' });
   // }
-=======
-  getPMBoard(): Observable<string> {
-    return this.http.get(this.pmUrl, { responseType: 'text' });
-  }
- 
-  getAdminBoard(): Observable<string> {
-    return this.http.get(this.adminUrl, { responseType: 'text' });
-  }
->>>>>>> dev_V0.5.5
 }
