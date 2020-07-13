@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SignUpInfo } from '../../model/auth/signup-info';
 import { AuthService } from '../../service/auth/auth.service';
- 
+
+
 
  
 @Component({

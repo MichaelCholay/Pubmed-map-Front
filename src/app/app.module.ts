@@ -10,11 +10,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MapComponent } from './map/map.component';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
+
 import { UserComponent } from './user/user.component';
-import { httpInterceptorProviders } from './common/model/auth/auth-interceptor';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
+import { LoginComponent } from './common/auth/login/login.component';
+import { RegisterComponent } from './common/auth/register/register.component';
+import { httpInterceptorProviders } from './common/service/auth/auth-interceptor';
+
 
 @NgModule({
   declarations: [
@@ -32,7 +36,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
