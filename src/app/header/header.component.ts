@@ -13,17 +13,17 @@ export class HeaderComponent implements OnInit {
   private roles: string[];
    authority: string;
 
-  constructor(private token: TokenStorageService) { }
+  constructor(private tokenStorage: TokenStorageService) { }
 
   ngOnInit(): void {
-    // this.info = {
-    //   token: this.token.getToken(),
-    //   username: this.token.getUsername(),
-    //   authorities: this.token.getAuthorities()
-    // };
+    this.info = {
+      token: this.tokenStorage.getToken(),
+      username: this.tokenStorage.getUsername(),
+      authorities: this.tokenStorage.getAuthorities()
+    };
 
-    if (this.token.getToken()) {
-      this.roles = this.token.getAuthorities();
+    if (this.tokenStorage.getToken()) {
+      this.roles = this.tokenStorage.getAuthorities();
       this.roles.every(role => {
         if (role === 'ROLE_ADMIN') {
           this.authority = 'admin';
@@ -38,9 +38,9 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  // logout() {
-  //   this.token.signOut();
-  //   window.location.reload();
-  // }
+  logout() {
+    this.tokenStorage.signOut();
+    window.location.reload();
+  }
 
 }
