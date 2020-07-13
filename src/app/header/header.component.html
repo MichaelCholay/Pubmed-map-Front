@@ -1,33 +1,34 @@
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <!-- <a class="navbar-brand" href="#">grokonez</a> -->
-    </div>
-    <ul class="nav navbar-nav" routerLinkActive="active">
-      <li class="nav-item"><a class="nav-link" routerLink="">Home</a></li>
+<div class="bg-img">
+  <div class="container">
+    <div class="topnav">
+      <a class="active" routerLink="">Home</a>
       <li *ngIf="authority === 'user'" class="nav-item">
         <a class="nav-link" routerLink="userAccount">User Board</a>
       </li>
-      <!-- <li *ngIf="authority === 'admin'" class="nav-item">
-        <a class="nav-link" routerLink="admin">Admin Board</a>
-      </li>
-      <li *ngIf="authority === 'pm'" class="nav-item">
-        <a class="nav-link" routerLink="pm">PM Board</a>
-      </li> -->
       <li *ngIf="!authority" class="nav-item">
         <a class="nav-link" routerLink="login">Login</a>
       </li>
-    </ul>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+<!-- <nav class="navbar navbar-dark bg-dark">
+  <div class="container">
+    <div class="navbar-header"></div>
+    
   </div>
 </nav>
 
-<div class="header">
-  <img src="../../assets/header-img/map-header.jpg" style="width: 100%;">
+<div class="header"> -->
+  <!-- <img src="../../assets/header-img/map-header.jpg" style="width: 100%;"> -->
 
-  
-  <!-- <div class="container">
-    <router-outlet></router-outlet>
-  </div> -->
+
   
   <div class="menu">
 
@@ -41,22 +42,31 @@
       <button class="btn btn-secondary" (click)="logout()">Logout</button>
     </div>
      
-    <ng-template #loggedOut>
-      <a>Please login.</a>
-    </ng-template>
+  
 
-    <ul>
+    <!-- <ul class="nav navbar-nav" routerLinkActive="active">
+      <li class="nav-item"><a class="nav-link" routerLink="">Home</a></li>
+      <li *ngIf="authority === 'user'" class="nav-item">
+        <a class="nav-link" routerLink="userAccount">User Board</a>
+      </li>
+      <li *ngIf="!authority" class="nav-item">
+        <a class="nav-link" routerLink="login">Login</a>
+      </li>
+    </ul> -->
+    <!-- <ul>
       <li><a href="#about">About</a></li>
       <li><a href="#services">Services</a></li>
       <li><a href="#contact">Contact</a></li>
-    </ul>
+    </ul> -->
 
-  </div>
+  <!-- </div>
   <div class="title">
     <h1>PUBMED-MAP</h1>
   </div>
-  <div class="legend-img"><a href="http://www.freepik.com">Designed by natanaelginting / Freepik</a></div>
+  <div class="legend-img"><a href="http://www.freepik.com">Designed by natanaelginting / Freepik</a></div> -->
   <!-- <a href='https://fr.freepik.com/photos-vecteurs-libre/technologie'>Technologie vecteur créé par starline - fr.freepik.com</a> -->
   
- 
-</div>
+  <ng-template #loggedOut>
+    <!-- <a>Please login.</a> -->
+  </ng-template>
+<!-- </div> -->
