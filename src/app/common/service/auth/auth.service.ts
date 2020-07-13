@@ -15,8 +15,8 @@ const httpOptions = {
 })
 export class AuthService {
  
-  private loginUrl = 'http://localhost:9997/api-auth/signin';
-  private signupUrl = 'http://localhost:9997/api-auth/signup';
+  private loginUrl = 'https://pubmed-map-spring-jwt.herokuapp.com/api-auth/signin';
+  private signupUrl = 'https://pubmed-map-spring-jwt.herokuapp.com/api-auth/signup';
  
   constructor(private http: HttpClient) {
   }
