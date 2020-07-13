@@ -14,10 +14,10 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AuthService {
- 
+
   private loginUrl = 'https://pubmed-map-spring-jwt.herokuapp.com/api-auth/signin';
   private signupUrl = 'https://pubmed-map-spring-jwt.herokuapp.com/api-auth/signup';
- 
+  
   constructor(private http: HttpClient) {
   }
  
