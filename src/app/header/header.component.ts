@@ -11,6 +11,7 @@ export class HeaderComponent implements OnInit {
   titre: string = "Pubmed World"
   info: any
   private roles: string[];
+<<<<<<< HEAD
    authority: string;
 
   constructor(private token: TokenStorageService) { }
@@ -24,10 +25,27 @@ export class HeaderComponent implements OnInit {
 
     if (this.token.getToken()) {
       this.roles = this.token.getAuthorities();
+=======
+  public authority: string;
+
+  constructor(private tokenStorage: TokenStorageService) { }
+
+  ngOnInit(): void {
+    this.info = {
+      token: this.tokenStorage.getToken(),
+      username: this.tokenStorage.getUsername(),
+      authorities: this.tokenStorage.getAuthorities()
+    };
+
+
+    if (this.tokenStorage.getToken()) {
+      this.roles = this.tokenStorage.getAuthorities();
+>>>>>>> dev_V0.5.5
       this.roles.every(role => {
         if (role === 'ROLE_ADMIN') {
           this.authority = 'admin';
           return false;
+<<<<<<< HEAD
         // } else if (role === 'ROLE_PM') {
         //   this.authority = 'pm';
         //   return false;
@@ -36,6 +54,21 @@ export class HeaderComponent implements OnInit {
         return true;
       });
     }
+=======
+        } else if (role === 'ROLE_PM') {
+          this.authority = 'pm';
+          return false;
+        }
+        this.authority = 'user';
+        return true;
+      });
+    }
+  }
+
+  logout() {
+    this.tokenStorage.signOut();
+    window.location.reload();
+>>>>>>> dev_V0.5.5
   }
 
   // logout() {
