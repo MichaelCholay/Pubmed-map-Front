@@ -8,7 +8,8 @@ import { TokenStorageService } from '../../service/auth/token-storage.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  exportAs: 'ngForm'
 })
 export class LoginComponent implements OnInit {
   form: any = {};
