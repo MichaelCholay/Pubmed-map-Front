@@ -11,7 +11,7 @@ export class HeaderComponent implements OnInit {
   titre: string = "Pubmed World"
   info: any
   private roles: string[];
-  private authority: string;
+  public authority: string;
 
   constructor(private tokenStorage: TokenStorageService) { }
 
