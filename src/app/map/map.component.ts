@@ -17,17 +17,18 @@ import { Geoloc } from '../common/model/geoloc';
 export class MapComponent implements OnInit {
   articles = []
   article: Article
-  articlePmid: string
+  articlePmid: number
   markerslist = []
   geoloc: Geoloc
   marker = L.marker
   markerCluster = new L.MarkerClusterGroup()
-  
-  bluepin = L.icon({iconUrl:'/assets/pins/bluepin.png', iconSize: [40, 60], iconAnchor: [20, 60], popupAnchor: [0, -30]})
-  redpin = L.icon({iconUrl:'/assets/pins/redpin.png', iconSize: [40, 60], iconAnchor: [20, 60], popupAnchor: [0, -30]})
-  greenpin = L.icon({iconUrl:'/assets/pins/greenpin.png', iconSize: [40, 60], iconAnchor: [20, 60], popupAnchor: [0, -30]})
-  greypin = L.icon({iconUrl:'/assets/pins/greypin.png', iconSize: [40, 60], iconAnchor: [20, 60], popupAnchor: [0, -30]})
-  yellowpin = L.icon({iconUrl:'/assets/pins/yellowpin.png', iconSize: [40, 60], iconAnchor: [20, 60], popupAnchor: [0, -30]})
+
+
+  bluepin = L.icon({ iconUrl: '/assets/pins/bluepin.png', iconSize: [40, 60], iconAnchor: [20, 60], popupAnchor: [0, -30] })
+  redpin = L.icon({ iconUrl: '/assets/pins/redpin.png', iconSize: [40, 60], iconAnchor: [20, 60], popupAnchor: [0, -30] })
+  greenpin = L.icon({ iconUrl: '/assets/pins/greenpin.png', iconSize: [40, 60], iconAnchor: [20, 60], popupAnchor: [0, -30] })
+  greypin = L.icon({ iconUrl: '/assets/pins/greypin.png', iconSize: [40, 60], iconAnchor: [20, 60], popupAnchor: [0, -30] })
+  yellowpin = L.icon({ iconUrl: '/assets/pins/yellowpin.png', iconSize: [40, 60], iconAnchor: [20, 60], popupAnchor: [0, -30] })
 
 
 
@@ -37,13 +38,13 @@ export class MapComponent implements OnInit {
 
 
     // Set map on Paris
-    const mymap = L.map('mapid').setView([48.833, 2.333], 2).addControl(L.control.scale());
+    const mymap = L.map('mapid', {scrollWheelZoom: false}).setView([48.833, 2.333], 2).addControl(L.control.scale());
 
     // List of layers
     var Esri_WorldGrayCanvas = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
       attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
       maxZoom: 11,
-      minZoom: 1
+      minZoom: 1,
     });
 
     var Esri_WorldStreetMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
@@ -97,29 +98,32 @@ export class MapComponent implements OnInit {
             let authorRank = j;
             let markerPin
             switch (authorRank) {
-              case ((this.articles[i].authorsList.length-1).toString()):
+              case ((this.articles[i].authorsList.length - 1).toString()):
                 markerPin = this.redpin
                 break
-              case ('0') :
+              case ('0'):
                 markerPin = this.bluepin
                 break
               default:
                 markerPin = this.yellowpin
             }
-            let marker = L.marker(L.latLng(this.articles[i].authorsList[j].latitude, this.articles[i].authorsList[j].longitude), { icon: markerPin, riseOnHover: true })
-              .on("click", this.showDetailsCard)
+            let pins = this.marker(L.latLng(this.articles[i].authorsList[j].latitude, this.articles[i].authorsList[j].longitude), { icon: markerPin, riseOnHover: true })
+              .on("click", this.showDetailsCard.bind(this, this.articles[i]))
               .bindPopup(popupInfo, this.customOptions)
               .on('mouseover', function (e) { this.openPopup() })
-              // .on('mouseout', function (e) { this.closePopup() })
+            // .on('mouseout', function (e) { this.closePopup() })
             // .bindPopup(`${this.articles[i].authorsList[j].lastName} ${this.articles[i].authorsList[j].foreName} ${this.articles[i]._id}`, this.customOptions)
-            // marker.addEventListener("click", function () { this.getDataArticle(this.articles[i]) })
 
-            markerCluster.addLayer(marker)
+            markerCluster.addLayer(pins)
           }
         }
       }
     })
     mymap.addLayer(markerCluster)
+
+
+    // this.getArticleById(this.pmid)
+
   }
 
   // add myCustomIcon
@@ -129,11 +133,6 @@ export class MapComponent implements OnInit {
   //   iconAnchor: [20, 20]
   // });
 
-  
-
-  //cutom popup
-  customPopup = "<center><b style='color:yellow'>DETRI AMELIA CHANDRA</b><br>Jl. Rowo Bening, Perum. Tiga Putri Tahap III<div class='waseman'><a href='https://facebook.com/idet.ambun' target='_blank' class='facebook' style='color:#fff;'><i class='fa fa-facebook'></i></a> <a href='https://twitter.com/detriamelia' target='_blank' class='twitter' style='color:#fff;'><i class='fa fa-twitter'></i></a> <a href='https://www.instagram.com/detriamelia/' target='_blank' class='instagram' style='color:#fff;'><i class='fa fa-instagram'></i></a> <a href='https://web.telegram.org/#/im?p=u687504930_6230769115732589639' class='telegram' style='color:#fff;'><i class='fa fa-whatsapp'></i></a></div></center>";
-
   customOptions = {
     'maxWidth': 1000,
     'className': 'customPopupMarker',
@@ -141,15 +140,29 @@ export class MapComponent implements OnInit {
     autoClose: true
   }
 
-  getDataArticle(article: Article) {
-    this.articlePmid = article._id.toString()
-    this.articlesApiService.getIdArticle(this.articlePmid).subscribe(
-      data => { this.article = data }
+  getIdArticle(article: Article) {
+    this.articlePmid = article._id
+    sessionStorage.setItem("_id", this.articlePmid.toString())
+    console.log(this.articlePmid)
+    this.getArticleById(this.articlePmid)
+  }
+
+
+  getArticleById(id) {
+    // this.articlePmid = article._id.toString()
+    id = sessionStorage.getItem('_id')
+    this.articlesApiService.getArticleByPmid(id).subscribe(
+      data => {
+        this.article = data
+        console.log(id)
+        error => {console.log(error)}
+      }
     )
   }
 
-  showDetailsCard() {
-    let card = document.getElementById("articleDetails");
+  showDetailsCard(article: Article) {
+    this.getIdArticle(article)
+    let card = document.getElementById("cardArticle");
     if (getComputedStyle(card).display != "none") {
       card.style.display = "none";
     } else {
@@ -159,13 +172,13 @@ export class MapComponent implements OnInit {
 
   closeDetailsCard() {
     let closeButton = document.getElementById("closeButton");
-    let card = document.getElementById("articleDetails");
-    closeButton.onclick = function(){
+    let card = document.getElementById("cardArticle");
+    closeButton.onclick = function () {
       console.log("close")
       card.style.display = "none";
     }
-  
   }
+  
 }
   //   onClick(e) {
   //     alert(e.layer.latLng);

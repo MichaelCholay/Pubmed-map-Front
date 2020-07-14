@@ -12,17 +12,17 @@ import { Geoloc } from '../model/geoloc';
 @Injectable()
 export class ArticlesApiService {
   articles: Article[];
-  localhostPortUrl: "http://localhost:9998/"
-  hostSpring = 'https://pubmed-map-spring-article.herokuapp.com/'
+  localhostPortUrl: "http://localhost:9998"
+  hostSpring = 'https://pubmed-map-spring-article.herokuapp.com'
 
   constructor(private httpClient: HttpClient) { }
 
   getAllArticles(): Observable<Article[]> {
-    let allArticlesUrl = `${this.hostSpring}article-api/public/articles`
+    let allArticlesUrl = `${this.hostSpring}/article-api/public/articles`
     return this.httpClient.get<Article[]>(allArticlesUrl)
   }
 
-  public getIdArticle(articleId: string) : Observable<Article>{
+  public getArticleByPmid(articleId) : Observable<Article>{
     let url = `${this.hostSpring}/article-api/public/article/pmid/${articleId}`
     return this.httpClient.get<Article>(url);
   }
