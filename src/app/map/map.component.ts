@@ -22,6 +22,12 @@ export class MapComponent implements OnInit {
   geoloc: Geoloc
   marker = L.marker
   markerCluster = new L.MarkerClusterGroup()
+  
+  bluepin = L.icon({iconUrl:'/assets/pins/bluepin.png', iconSize: [40, 60], iconAnchor: [20, 60],})
+  redpin = L.icon({iconUrl:'/assets/pins/redpin.png', iconSize: [40, 60], iconAnchor: [20, 60],})
+  greenpin = L.icon({iconUrl:'/assets/pins/greenpin.png', iconSize: [40, 60], iconAnchor: [20, 60],})
+  greypin = L.icon({iconUrl:'/assets/pins/greypin.png', iconSize: [40, 60], iconAnchor: [20, 60],})
+  yellowpin = L.icon({iconUrl:'/assets/pins/yellowpin.png', iconSize: [40, 60], iconAnchor: [20, 60],})
 
 
 
@@ -87,11 +93,24 @@ export class MapComponent implements OnInit {
             //  console.log("geoloc: " + this.geoloc)
             const popupInfo = `<center><span class='author'> ${this.articles[i].authorsList[j].lastName} ${this.articles[i].authorsList[j].foreName}</span><br>
             <span class='adress'> ${this.articles[i].authorsList[j].googleFormatedAdress}</span><br><br>
-            <a class="btn btn-outline-secondary btn-sm" data-toggle="collapse" href="${this.articles[i].pubmedUrl}" target="_blank" rel="noopener noreferrer" >More Details</a><center> `
-            let marker = L.marker(L.latLng(this.articles[i].authorsList[j].latitude, this.articles[i].authorsList[j].longitude), { /*title: this.articles[i].articleTitle,*/ icon: this.myIcon, riseOnHover: true })
+            <a class="btn btn-outline-secondary btn-sm" data-toggle="collapse" href="${this.articles[i].pubmedUrl}" target="_blank" rel="noopener noreferrer" >More Details</a><center>`
+            let authorRank = j;
+            let markerPin
+            switch (authorRank) {
+              case ((this.articles[i].authorsList.length-1).toString()):
+                markerPin = this.redpin
+                break
+              case ('0') :
+                markerPin = this.bluepin
+                break
+              default:
+                markerPin = this.yellowpin
+            }
+            let marker = L.marker(L.latLng(this.articles[i].authorsList[j].latitude, this.articles[i].authorsList[j].longitude), { icon: markerPin, riseOnHover: true })
               .on("click", this.showDetailsCard)
               .bindPopup(popupInfo, this.customOptions)
-              .on('mouseover', function (e) { this.openPopup(); });
+              .on('mouseover', function (e) { this.openPopup() })
+              // .on('mouseout', function (e) { this.closePopup() })
             // .bindPopup(`${this.articles[i].authorsList[j].lastName} ${this.articles[i].authorsList[j].foreName} ${this.articles[i]._id}`, this.customOptions)
             // marker.addEventListener("click", function () { this.getDataArticle(this.articles[i]) })
 
@@ -103,12 +122,14 @@ export class MapComponent implements OnInit {
     mymap.addLayer(markerCluster)
   }
 
-  // add icon
+  // add myCustomIcon
   myIcon = L.icon({
     iconUrl: 'assets/pins/bluepin.png',
     iconSize: [40, 50],
     iconAnchor: [20, 20]
   });
+
+  
 
   //cutom popup
   customPopup = "<center><b style='color:yellow'>DETRI AMELIA CHANDRA</b><br>Jl. Rowo Bening, Perum. Tiga Putri Tahap III<div class='waseman'><a href='https://facebook.com/idet.ambun' target='_blank' class='facebook' style='color:#fff;'><i class='fa fa-facebook'></i></a> <a href='https://twitter.com/detriamelia' target='_blank' class='twitter' style='color:#fff;'><i class='fa fa-twitter'></i></a> <a href='https://www.instagram.com/detriamelia/' target='_blank' class='instagram' style='color:#fff;'><i class='fa fa-instagram'></i></a> <a href='https://web.telegram.org/#/im?p=u687504930_6230769115732589639' class='telegram' style='color:#fff;'><i class='fa fa-whatsapp'></i></a></div></center>";
@@ -143,15 +164,9 @@ export class MapComponent implements OnInit {
       console.log("close")
       card.style.display = "none";
     }
-    // if (getComputedStyle(card).display != "none") {
-    //   card.style.display = "none";
-    // }
+  
   }
-
-  // bindMarker(){
-  //   L.In.("click", function () { this.getDataArticle(this.articles[i]) })
-  // }
-
+}
   //   onClick(e) {
   //     alert(e.layer.latLng);
   // }
@@ -177,7 +192,6 @@ export class MapComponent implements OnInit {
 
 
 
-  // L.marker([50.6311634, 3.0599573], { icon: myIcon }).bindPopup('Marqueur').addTo(mymap).openPopup();
 
   // add a search bar for adress
   // const searchControl = new GeoSearchControl({
@@ -186,47 +200,3 @@ export class MapComponent implements OnInit {
   //   autoComplete: false,
   // });
   // mymap.addControl(searchControl)
-
-  // provider Google Maps
-  // const provider = new GoogleProvider({
-  //   params: {
-  //     key: 'AIzaSyAWttTD7pDklvM1Jha4xbVqe82JcUzRx7k',
-  //   },
-  // });
-  // mymap.addControl(
-  //   new GeoSearchControl({
-  //     provider,
-  //   }),
-  // );
-
-
-  // provider.search({query: 'Paris'})
-  // console.log(query + )
-
-
-  // function adressGeocode() {
-  // const provider = new OpenStreetMapProvider();
-  // const results = provider.search({ query: "impase reille 75014 Paris" })
-  // return result.
-  // }
-  // popup click sur map
-  /*var popup = L.popup();
-  function onMapClick(e) {
-    popup
-      .setLatLng(e.latlng)
-      .setContent("You clicked the map at " + e.latlng.toString())
-      .openOn(mymap);
-  }
-  mymap.on('click', onMapClick);*/
-  // }
-  // list of markers
-  // geolocalisation = function(geoloc) {
-  // //for (var i = 0; i < this.geoloc.length; i++) 
-  // // for (var i in this.geoloc) {
-  //   var latLng = [geoloc[0][1],geoloc[0][2]]
-  //   console.log("latLng:" + latLng)
-  // L.marker(latLng)
-  // 	.bindPopup(this.geoloc[i][0])
-  // 	.addTo(mymap);
-  // }
-}
