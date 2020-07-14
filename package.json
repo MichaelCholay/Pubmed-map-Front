@@ -27,6 +27,7 @@
     "@types/leaflet.markercluster": "^1.4.2",
     "bootstrap": "^4.5.0",
     "express": "^4.17.1",
+    "jquery": "^3.5.1",
     "leaflet": "^1.6.0",
     "leaflet-geosearch": "^3.0.6",
     "leaflet-search": "^2.9.8",
