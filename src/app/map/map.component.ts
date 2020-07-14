@@ -23,11 +23,11 @@ export class MapComponent implements OnInit {
   marker = L.marker
   markerCluster = new L.MarkerClusterGroup()
   
-  bluepin = L.icon({iconUrl:'/assets/pins/bluepin.png', iconSize: [40, 60], iconAnchor: [20, 60],})
-  redpin = L.icon({iconUrl:'/assets/pins/redpin.png', iconSize: [40, 60], iconAnchor: [20, 60],})
-  greenpin = L.icon({iconUrl:'/assets/pins/greenpin.png', iconSize: [40, 60], iconAnchor: [20, 60],})
-  greypin = L.icon({iconUrl:'/assets/pins/greypin.png', iconSize: [40, 60], iconAnchor: [20, 60],})
-  yellowpin = L.icon({iconUrl:'/assets/pins/yellowpin.png', iconSize: [40, 60], iconAnchor: [20, 60],})
+  bluepin = L.icon({iconUrl:'/assets/pins/bluepin.png', iconSize: [40, 60], iconAnchor: [20, 60], popupAnchor: [0, -30]})
+  redpin = L.icon({iconUrl:'/assets/pins/redpin.png', iconSize: [40, 60], iconAnchor: [20, 60], popupAnchor: [0, -30]})
+  greenpin = L.icon({iconUrl:'/assets/pins/greenpin.png', iconSize: [40, 60], iconAnchor: [20, 60], popupAnchor: [0, -30]})
+  greypin = L.icon({iconUrl:'/assets/pins/greypin.png', iconSize: [40, 60], iconAnchor: [20, 60], popupAnchor: [0, -30]})
+  yellowpin = L.icon({iconUrl:'/assets/pins/yellowpin.png', iconSize: [40, 60], iconAnchor: [20, 60], popupAnchor: [0, -30]})
 
 
 
@@ -42,8 +42,8 @@ export class MapComponent implements OnInit {
     // List of layers
     var Esri_WorldGrayCanvas = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
       attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
-      maxZoom: 19,
-      minZoom: 2
+      maxZoom: 11,
+      minZoom: 1
     });
 
     var Esri_WorldStreetMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
@@ -123,11 +123,11 @@ export class MapComponent implements OnInit {
   }
 
   // add myCustomIcon
-  myIcon = L.icon({
-    iconUrl: 'assets/pins/bluepin.png',
-    iconSize: [40, 50],
-    iconAnchor: [20, 20]
-  });
+  // myIcon = L.icon({
+  //   iconUrl: 'assets/pins/bluepin.png',
+  //   iconSize: [40, 50],
+  //   iconAnchor: [20, 20]
+  // });
 
   
 
