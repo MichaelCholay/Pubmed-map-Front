@@ -7,13 +7,12 @@
 <!-- <div class="card" id="articleDetails"> -->
 <div class="container" >
     <div class="card bg-light mb-3" style="width: 30rem;" id=cardArticle>
-        <div class="closeButton">
-            <button class="fa fa-window-close" aria-hidden="true" id="closeButton" (onclick)="closeDetailsCard">
-            </button>
-        </div>
-        <button type="button" class="btn btn-default btn-lg">
-            <span class="glyphicon glyphicon-star-empty" aria-hidden="true"> Add to favorite</span>
-        </button>
+        <!-- <div class="closeButton"> -->
+            <a class="material-icons royalblue" type="button" aria-hidden="true" id="closeButton" (onclick)="closeDetailsCard">cancel</a>
+        <!-- </div> -->
+        <a type="button">
+            <span class="material-icons royalblue" aria-hidden="true">stars</span>
+        </a>
         <h5>{{article.articleTitle}}</h5>
         <br>
         <div class="row">

@@ -95,8 +95,8 @@ export class MapComponent implements OnInit {
             //  this.geoloc.articleTitle = this.articles[i].articleTitle
             //  console.log("geoloc: " + this.geoloc)
             const popupInfo = `<center><span class='author'> ${this.articles[i].authorsList[j].lastName} ${this.articles[i].authorsList[j].foreName}</span><br>
-            <span class='adress'> ${this.articles[i].authorsList[j].googleFormatedAdress}</span><br><br>
-            <a class="btn btn-outline-secondary btn-sm" data-toggle="collapse" href="${this.articles[i].pubmedUrl}" target="_blank" rel="noopener noreferrer" >More Details</a><center>`
+            <span class='adress'> ${this.articles[i].authorsList[j].googleFormatedAdress}</span>`
+            // <a class="btn btn-outline-secondary btn-sm" data-toggle="collapse" href="${this.articles[i].pubmedUrl}" target="_blank" rel="noopener noreferrer" >More Details</a><center>`
             let authorRank = j;
             let markerPin
             switch (authorRank) {
@@ -123,7 +123,7 @@ export class MapComponent implements OnInit {
     })
     mymap.addLayer(markerCluster)
 
-
+    this.closeDetailsCard()
     // this.getArticleById(this.pmid)
 
   }
@@ -173,18 +173,15 @@ export class MapComponent implements OnInit {
   }
 
   closeDetailsCard() {
-    let closeButton = document.getElementById("closeButton");
     let card = document.getElementById("cardArticle");
-    closeButton.onclick = function () {
-      console.log("close")
+    let closeButton = document.getElementById("closeButton");
+      closeButton.onclick = function () {
       card.style.display = "none";
     }
   }
   
 }
-  //   onClick(e) {
-  //     alert(e.layer.latLng);
-  // }
+
 
   // get id of an article 
   // getArticlePmid(article: Article) {
