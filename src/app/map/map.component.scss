@@ -5,15 +5,15 @@
     z-index: 0;
 }
 
-#articleDetails { 
-    display:none; 
-    position: absolute;
-    z-index: 1;
-    top: 200px;
-    left: 40px;
-    border-radius: 10px;
-    width: 40%;
-}
+// #articleDetails { 
+//     display:none; 
+//     position: absolute;
+//     z-index: 1;
+//     top: 200px;
+//     left: 40px;
+//     border-radius: 10px;
+//     width: 40%;
+// }
 
 #cardArticle {
     display:none; 
@@ -28,11 +28,62 @@
     opacity: .8;
 }
 
+#container {
+    width: 30rem;
+}
+
 h6 {
     text-align: center;  
-    margin: auto; 
+    margin: auto;
+    color: royalblue;
 }
 
 #closeButton { 
     float: right; 
 }
+
+nav > .nav.nav-tabs{
+
+    border: none;
+      color:#fff;
+      background:#272e38;
+      border-radius:10px;
+  
+  }
+  nav > div a.nav-item.nav-link,
+  nav > div a.nav-item.nav-link.active
+  {
+    border: none;
+      padding: 18px 25px;
+      color:#fff;
+      background: grey;
+      border: radius 10px;;
+  }
+  
+  nav > div a.nav-item.nav-link.active:after
+   {
+    content: "";
+    position: relative;
+    bottom: -60px;
+    left: -10%;
+    border: 15px solid transparent;
+    border-top-color:royalblue ;
+  }
+  .tab-content{
+    background: #fdfdfd;
+      line-height: 10px;
+      border: 1px solid #ddd;
+      border-top:5px solid royalblue;
+      border-bottom:5px solid royalblue;
+      padding:30px 25px;
+  }
+  
+  nav > div a.nav-item.nav-link:hover,
+  nav > div a.nav-item.nav-link:focus
+  {
+    border: none;
+      background: royalblue;
+      color:#fff;
+      border: radius 10px;
+      transition:background 0.20s linear;
+  }

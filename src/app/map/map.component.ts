@@ -7,6 +7,7 @@ import { ArticlesApiService } from '../common/service/articles-api.service';
 import "leaflet.markercluster";
 import { Article } from '../common/model/article';
 import { Geoloc } from '../common/model/geoloc';
+import { Author } from '../common/model/author';
 
 
 @Component({
@@ -22,6 +23,8 @@ export class MapComponent implements OnInit {
   geoloc: Geoloc
   marker = L.marker
   markerCluster = new L.MarkerClusterGroup()
+  author: Author
+  authorsList: Author[]
 
 
   bluepin = L.icon({ iconUrl: '/assets/pins/bluepin.png', iconSize: [40, 60], iconAnchor: [20, 60], popupAnchor: [0, -30] })
@@ -29,7 +32,6 @@ export class MapComponent implements OnInit {
   greenpin = L.icon({ iconUrl: '/assets/pins/greenpin.png', iconSize: [40, 60], iconAnchor: [20, 60], popupAnchor: [0, -30] })
   greypin = L.icon({ iconUrl: '/assets/pins/greypin.png', iconSize: [40, 60], iconAnchor: [20, 60], popupAnchor: [0, -30] })
   yellowpin = L.icon({ iconUrl: '/assets/pins/yellowpin.png', iconSize: [40, 60], iconAnchor: [20, 60], popupAnchor: [0, -30] })
-
 
 
   constructor(private articlesApiService: ArticlesApiService) { }

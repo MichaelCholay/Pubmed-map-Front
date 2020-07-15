@@ -5,41 +5,49 @@
 <div id="mapid"></div>
 
 <!-- <div class="card" id="articleDetails"> -->
-
-<div class="card bg-light mb-3" style="width: 30rem;" id=cardArticle>
-    <div class="closeButton">
-        <button class="fa fa-window-close" aria-hidden="true" id="closeButton" (onclick)="closeDetailsCard">
+<div class="container" >
+    <div class="card bg-light mb-3" style="width: 30rem;" id=cardArticle>
+        <div class="closeButton">
+            <button class="fa fa-window-close" aria-hidden="true" id="closeButton" (onclick)="closeDetailsCard">
+            </button>
+        </div>
+        <button type="button" class="btn btn-default btn-lg">
+            <span class="glyphicon glyphicon-star-empty" aria-hidden="true"> Add to favorite</span>
         </button>
-    </div>
-    <button type="button" class="btn btn-default btn-lg">
-        <span class="glyphicon glyphicon-star-empty" aria-hidden="true"> Add to favorite</span>
-    </button>
-    <h6>{{article.articleTitle}}</h6>
-    <div class="card-header border-light  mb-3">
-        <ul class="nav nav-tabs nav-fill flex-column flex-sm-row">
-            <li class="nav-item">
-                <a class="nav-link flex-sm-fill active" id="tab-article" href="/articles#articleDetails" data-toggle="tab">Article details</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link flex-sm-fill" id="tab-abstract" href="/articles#articleAbstract" data-toggle="tab">Abstract</a>
-            </li>
-        </ul>
-    </div>
-    <div class="tab-content">
-        <div class="tab-pane active card-body .tab-pane" id="/articles#articleDetails" >
-            <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                card's content.</p>
+        <h6>{{article.articleTitle}}</h6>
+        <br>
+        <div class="row">
+            <div class="col-12">
+                <nav>
+                    <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                        <!-- <ul class="nav nav-tabs nav-fill flex-column flex-sm-row"> -->
+                            <!-- <li class="nav-item active"> -->
+                                <a class="nav-item active nav-link flex-sm-fill" id="nav-article" href="#articleDetails" data-toggle="tab" role="tab" aria-controls="nav-article" aria-selected="true">Article details</a>
+                            <!-- </li> -->
+                            <!-- <li class="nav-item"> -->
+                                <a class="nav-item nav-link flex-sm-fill" id="nav-abstract" href="#articleAbstract" data-toggle="tab" role="tab" aria-controls="nav-abstract" aria-selected="true">Abstract</a>
+                            <!-- </li> -->
+                        <!-- </ul> -->
+                    </div>
+                </nav>
+                <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+                    <div class="tab-pane show active fade" id="articleDetails" role="tabpanel" aria-labelledby="nav-article-tab">
+                    <!-- <div class="tab-pane active card-body" id="articleDetails"> -->
+                        <h6 class="card-subtitle mb-2 text-muted">journal: {{article.journal}}</h6>
+                        <!-- <div *ngFor="let k of objectKeys(author)">{{author[k].lastName}}</div> -->
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                        </p>
+                    </div>
+                    <div class="tab-pane card-body" id="articleAbstract" role="tabpanel" aria-labelledby="nav-abstract-tab">
+                        <h6 class="card-subtitle mb-2 text-muted">abstract pane</h6>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                            the
+                            card's content.</p>
+                    </div>
+                </div>
+                <div class="card-footer border-light mb-3">
+                    <a href="#" class="btn btn-primary">Go to pubmed</a>
+                </div>
+            </div>
         </div>
-        <div class="tab-pane active card-body .tab-pane" id="/articles#articleAbstract" >
-            <!-- <h5 class="card-title"> {{ article.articleTitle }} </h5> -->
-            <h6 class="card-subtitle mb-2 text-muted">jefeef</h6>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                card's content.</p>
-        </div>
-        <div class="card-footer border-light mb-3">
-            <a href="#" class="btn btn-primary">Go to pubmed</a>
-        </div>
     </div>
-</div>
-<!-- </div> -->
