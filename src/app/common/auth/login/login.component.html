@@ -1,10 +1,23 @@
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 <div *ngIf="isLoggedIn; else loggedOut">
-    Logged in as {{roles}}.
-  </div>
+  Logged in as {{roles}}.
+</div>
    
   <ng-template #loggedOut>
+    <div class="form" id="divLoginForm" >
     <div class="row col-sm-6" style="max-width:350px;">
-      <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+      <form name="form" id="loginForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
         <div class="form-group">
           <label for="username">Username</label>
           <input type="text" class="form-control" name="username" [(ngModel)]="form.username" required />
@@ -32,4 +45,5 @@
     <p>Don't have an account?</p>
     <a href="signup" class="btn btn-success">Sign Up</a>
   </div>
+</div>
 </ng-template>
