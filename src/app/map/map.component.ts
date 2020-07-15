@@ -113,8 +113,7 @@ export class MapComponent implements OnInit {
               .on("click", this.showDetailsCard.bind(this, this.articles[i]))
               .bindPopup(popupInfo, this.customOptions)
               .on('mouseover', function (e) { this.openPopup() })
-            // .on('mouseout', function (e) { this.closePopup() })
-            // .bindPopup(`${this.articles[i].authorsList[j].lastName} ${this.articles[i].authorsList[j].foreName} ${this.articles[i]._id}`, this.customOptions)
+              .on('mouseout', function (e) { this.closePopup()})
 
             markerCluster.addLayer(pins)
           }
@@ -139,7 +138,7 @@ export class MapComponent implements OnInit {
     'maxWidth': 1000,
     'className': 'customPopupMarker',
     closeButton: true,
-    autoClose: true
+    // autoClose: true
   }
 
   getIdArticle(article: Article) {
