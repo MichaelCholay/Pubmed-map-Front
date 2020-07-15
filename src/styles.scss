@@ -31,7 +31,7 @@
 
 
 .customPopupMarker .leaflet-popup-content-wrapper {
-    background:darkgray;
+    background: royalblue;
     color: #eee;
     // font-weight: bold;
     font-size: 12px;
@@ -42,9 +42,9 @@
     border-color: black;
 }
 
-.customPopupMarker .mypopup.leaflet-popup-tip {
-    background: red;
-}
+// .customPopupMarker .mypopup.leaflet-popup-tip {
+//     background: red;
+// }
 
 .author { font-size: 14px; font-weight: bold;}
 html, body { height: 100%; }

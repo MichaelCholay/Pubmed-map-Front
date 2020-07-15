@@ -131,6 +131,26 @@ textarea:focus {
     outline:none;
 }
 
+.customPopupMarker .leaflet-popup-content-wrapper {
+  background:darkgray;
+  color: #eee;
+  // font-weight: bold;
+  font-size: 12px;
+  line-height: 24px;
+  border-radius: 10px;
+  border: solid;
+  border-width: thin;
+  border-color: black;
+}
+
+.customPopupMarker .mypopup.leaflet-popup-tip {
+  background: red;
+}
+
+.author { font-size: 14px; font-weight: bold;}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
 // .btn-primary:focus {
 //   color: red;
 //   background-color: orange !important;
