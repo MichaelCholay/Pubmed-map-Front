@@ -14,7 +14,7 @@
         <button type="button" class="btn btn-default btn-lg">
             <span class="glyphicon glyphicon-star-empty" aria-hidden="true"> Add to favorite</span>
         </button>
-        <h6>{{article.articleTitle}}</h6>
+        <h5>{{article.articleTitle}}</h5>
         <br>
         <div class="row">
             <div class="col-12">
@@ -33,20 +33,18 @@
                 <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
                     <div class="tab-pane show active fade" id="articleDetails" role="tabpanel" aria-labelledby="nav-article-tab">
                     <!-- <div class="tab-pane active card-body" id="articleDetails"> -->
-                        <h6 class="card-subtitle mb-2 text-muted">journal: {{article.journal}}</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">Journal </h6><h6>{{article.journal}}</h6><br>
+                        <h6 class="card-subtitle mb-2 text-muted">Revision date </h6><h6>{{article.revisionDate}}</h6><br>
+                        <h6 class="card-subtitle mb-2 text-muted">Keywords </h6><h6>{{article.keywordsList}}</h6>
                         <!-- <div *ngFor="let k of objectKeys(author)">{{author[k].lastName}}</div> -->
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                        </p>
                     </div>
                     <div class="tab-pane card-body" id="articleAbstract" role="tabpanel" aria-labelledby="nav-abstract-tab">
-                        <h6 class="card-subtitle mb-2 text-muted">abstract pane</h6>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the
-                            card's content.</p>
+                        <h6 class="card-subtitle mb-2 text-muted">Abstract</h6>
+                        <textarea class="card-text">{{article.articleAbstract}}</textarea>
                     </div>
                 </div>
-                <div class="card-footer border-light mb-3">
-                    <a href="#" class="btn btn-primary">Go to pubmed</a>
+                <div class="card-footer border-light mb-3 text-center">
+                    <a href={{article.pubmedUrl}} class="btn" role="button" target="_blank" rel="noopener noreferrer">Go to pubmed</a>
                 </div>
             </div>
         </div>
