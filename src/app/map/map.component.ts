@@ -40,7 +40,7 @@ export class MapComponent implements OnInit {
 
 
     // Set map on Paris
-    const mymap = L.map('mapid', {scrollWheelZoom: false}).setView([48.833, 2.333], 2).addControl(L.control.scale());
+    const mymap = L.map('mapid', { scrollWheelZoom: false }).setView([48.833, 2.333], 2).addControl(L.control.scale());
 
     // List of layers
     var Esri_WorldGrayCanvas = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
@@ -125,6 +125,21 @@ export class MapComponent implements OnInit {
     this.closeDetailsCard()
     // this.getArticleById(this.pmid)
 
+    //Legend specific
+    var legend= new L.Control({
+      position: "bottomright"
+    })
+
+      legend.onAdd = function(map) {
+      var div = L.DomUtil.create("div", "legend");
+       div.innerHTML += "<h5>Legend</h5>";
+       div.innerHTML += '<img src=/assets/pins/pins_icons/bluepinIcon.png></img><span>  First author</span><br>';
+       div.innerHTML += '<img src=/assets/pins/pins_icons/redpinIcon.png></img><span>  Last author</span><br>';
+       div.innerHTML += '<img src=/assets/pins/pins_icons/yellowpinIcon.png></img><span>  Intermediate author</span><br>';
+       return div;
+     };
+     legend.addTo(mymap);
+
   }
 
   // add myCustomIcon
@@ -155,7 +170,7 @@ export class MapComponent implements OnInit {
       data => {
         this.article = data
         console.log(id)
-        error => {console.log(error)}
+        error => { console.log(error) }
       }
     )
   }
@@ -173,11 +188,14 @@ export class MapComponent implements OnInit {
   closeDetailsCard() {
     let card = document.getElementById("cardArticle");
     let closeButton = document.getElementById("closeButton");
-      closeButton.onclick = function () {
+    closeButton.onclick = function () {
       card.style.display = "none";
     }
   }
-  
+
+
+
+
 }
 
 
