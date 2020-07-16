@@ -4,12 +4,11 @@
 <br>
 <div id="mapid"></div>
 
-<!-- <div class="card" id="articleDetails"> -->
-<div class="container" >
+<!-- card "articleDetails"> -->
+<div class="container">
     <div class="card bg-light mb-3" style="width: 30rem;" id=cardArticle>
-        <!-- <div class="closeButton"> -->
-            <a class="material-icons royalblue" type="button" aria-hidden="true" id="closeButton" (onclick)="closeDetailsCard">cancel</a>
-        <!-- </div> -->
+        <a class="material-icons royalblue" type="button" aria-hidden="true" id="closeButton"
+            (onclick)="closeDetailsCard">cancel</a>
         <a type="button">
             <span class="material-icons royalblue" aria-hidden="true">stars</span>
         </a>
@@ -19,32 +18,49 @@
             <div class="col-12">
                 <nav>
                     <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                        <!-- <ul class="nav nav-tabs nav-fill flex-column flex-sm-row"> -->
-                            <!-- <li class="nav-item active"> -->
-                                <a class="nav-item active nav-link flex-sm-fill" id="nav-article" href="#articleDetails" data-toggle="tab" role="tab" aria-controls="nav-article" aria-selected="true">Article details</a>
-                            <!-- </li> -->
-                            <!-- <li class="nav-item"> -->
-                                <a class="nav-item nav-link flex-sm-fill" id="nav-abstract" href="#articleAbstract" data-toggle="tab" role="tab" aria-controls="nav-abstract" aria-selected="true">Abstract</a>
-                            <!-- </li> -->
-                        <!-- </ul> -->
+                        <a class="nav-item active nav-link flex-sm-fill" id="nav-article" href="#articleDetails"
+                            data-toggle="tab" role="tab" aria-controls="nav-article" aria-selected="true">Article
+                            details</a>
+                        <a class="nav-item nav-link flex-sm-fill" id="nav-abstract" href="#articleAbstract"
+                            data-toggle="tab" role="tab" aria-controls="nav-abstract" aria-selected="true">Abstract</a>
                     </div>
                 </nav>
                 <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
-                    <div class="tab-pane show active fade" id="articleDetails" role="tabpanel" aria-labelledby="nav-article-tab">
-                    <!-- <div class="tab-pane active card-body" id="articleDetails"> -->
-                        <h6 class="card-subtitle mb-2 text-muted">Journal </h6><h6>{{article.journal}}</h6><br>
-                        <h6 class="card-subtitle mb-2 text-muted">Revision date </h6><h6>{{article.revisionDate}}</h6><br>
-                        <h6 class="card-subtitle mb-2 text-muted">Keywords </h6><h6>{{article.keywordsList}}</h6>
-                        <!-- <div *ngFor="let k of objectKeys(author)">{{author[k].lastName}}</div> -->
+                    <div class="tab-pane show active fade" id="articleDetails" role="tabpanel"
+                        aria-labelledby="nav-article-tab">
+                        <h6 class="card-subtitle mb-2 text-muted">Journal </h6>
+                        <h6>{{article.journal}}</h6><br>
+                        <h6 class="card-subtitle mb-2 text-muted">Revision date </h6>
+                        <h6>{{article.revisionDate}}</h6><br>
+                        <h6 class="card-subtitle mb-2 text-muted">Keywords </h6>
+                        <h6>{{article.keywordsList}}</h6>
                     </div>
-                    <div class="tab-pane card-body" id="articleAbstract" role="tabpanel" aria-labelledby="nav-abstract-tab">
+                    <div class="tab-pane card-body" id="articleAbstract" role="tabpanel"
+                        aria-labelledby="nav-abstract-tab">
                         <h6 class="card-subtitle mb-2 text-muted">Abstract</h6>
                         <textarea class="card-text">{{article.articleAbstract}}</textarea>
                     </div>
                 </div>
                 <div class="card-footer border-light mb-3 text-center">
-                    <a href={{article.pubmedUrl}} class="btn" role="button" target="_blank" rel="noopener noreferrer">Go to pubmed</a>
+                    <a href={{article.pubmedUrl}} class="btn" role="button" target="_blank" rel="noopener noreferrer">Go
+                        to pubmed</a>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
+<!-- Legend card -->
+<!-- <div class="card">
+    <h5 class="card-header" id="legend-header">
+        <a class="collapsed d-block" data-toggle="collapse" href="#legend" aria-expanded="true" aria-controls="legend" id="heading-legend">Legend</a>
+        <a class="material-icons menu" type="button" aria-hidden="true" aria-label="menu_open">menu_open</a>
+    </h5>
+    <div id="legend" class="collapse" aria-labelledby="heading-legend">
+        <div class="card-body">
+            <img src=../../assets/pins/pins_icons/bluepinIcon.png><span>  First author</span><br>
+            <img src=/assets/pins/pins_icons/redpinIcon.png><span>  Last author</span><br>
+            <img src=/assets/pins/pins_icons/yellowpinIcon.png><span>  Intermediate author</span><br>
+        </div>
+    </div>
+</div> -->

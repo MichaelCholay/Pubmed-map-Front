@@ -139,6 +139,7 @@ export class MapComponent implements OnInit {
        return div;
      };
      legend.addTo(mymap);
+     
 
   }
 
