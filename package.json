@@ -7,10 +7,13 @@
   "scripts": {
     "ng": "ng",
     "start": "node server.js",
+    "clean": "rimraf ./dist",
+    "build:prod": "ng build --prod",
     "build": "ng build --aot",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "build:ci": "npm run clean && npm run test && npm run build:prod"
   },
   "private": true,
   "dependencies": {
