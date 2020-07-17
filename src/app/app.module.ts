@@ -16,6 +16,7 @@ import { UserComponent } from './common/auth/user/user.component';
 import { httpInterceptorProviders } from './common/model/auth/auth-interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+
 @NgModule({
   declarations: [
     AppComponent,

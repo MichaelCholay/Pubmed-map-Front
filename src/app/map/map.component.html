@@ -2,6 +2,31 @@
 <br>
 <br>
 <br>
+
+<div class="container">
+    <br />
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8">
+            <form class="card card-sm">
+                <div class="card-body row no-gutters align-items-center">
+                    <div class="col-auto">
+                        <i class="fas fa-search h4 text-body"></i>
+                    </div>
+                    <div class="col">
+                        <input class="form-control form-control-lg form-control-borderless" [(ngModel)] = "value" type="search"
+                            placeholder="Search article by Title">
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-lg btn-success" type="submit" (onclick)="findArticleByTitle(value)">Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
 <div id="mapid"></div>
 
 <!-- card "articleDetails"> -->
@@ -10,7 +35,7 @@
         <a class="material-icons royalblue" type="button" aria-hidden="true" id="closeButton"
             (onclick)="closeDetailsCard">cancel</a>
         <a type="button">
-            <span class="material-icons royalblue" aria-hidden="true">stars</span>
+            <span class="material-icons royalblue" aria-hidden="true" (onclick)="addFavoriteArticle">stars</span>
         </a>
         <h5>{{article.articleTitle}}</h5>
         <br>

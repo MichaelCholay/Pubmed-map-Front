@@ -8,6 +8,9 @@ import "leaflet.markercluster";
 import { Article } from '../common/model/article';
 import { Geoloc } from '../common/model/geoloc';
 import { Author } from '../common/model/author';
+import { ArticleResponse } from '../common/model/auth/article-response';
+import { TokenStorageService } from '../common/service/auth/token-storage.service';
+import { AuthService } from '../common/service/auth/auth.service';
 
 
 @Component({
@@ -25,6 +28,9 @@ export class MapComponent implements OnInit {
   markerCluster = new L.MarkerClusterGroup()
   author: Author
   authorsList: Author[]
+  favoriteArticle: ArticleResponse = new ArticleResponse
+  value
+  
 
 
   bluepin = L.icon({ iconUrl: '/assets/pins/bluepin.png', iconSize: [40, 60], iconAnchor: [20, 60], popupAnchor: [0, -30] })
@@ -34,7 +40,7 @@ export class MapComponent implements OnInit {
   yellowpin = L.icon({ iconUrl: '/assets/pins/yellowpin.png', iconSize: [40, 60], iconAnchor: [20, 60], popupAnchor: [0, -30] })
 
 
-  constructor(private articlesApiService: ArticlesApiService) { }
+  constructor(private articlesApiService: ArticlesApiService, private tokenStorage: TokenStorageService, private authService: AuthService) { }
 
   ngOnInit(): void {
 
@@ -70,11 +76,6 @@ export class MapComponent implements OnInit {
       "black map": CartoDB_DarkMatterNoLabels
     }, {}));
 
-    //test ajout marker
-    // L.marker([42.36373469999999, -71.1609714],{title: 'test'}).addTo(mymap)
-
-
-
     // add markerCluster
     var markerCluster = new L.MarkerClusterGroup()
 
@@ -85,15 +86,9 @@ export class MapComponent implements OnInit {
     }, (error) => {
       console.log(error)
     }, () => {
-      console.log("end of subscribe")
-
       for (let i in this.articles) {
         for (let j in this.articles[i].authorsList) {
-          // for (let i = 0; i < this.articles.length; i++) {
-          //   for (let j = 0; j < this.articles[i].authorsList.length; j++) {
           if (this.articles[i].authorsList[j].latitude != 0 && this.articles[i].authorsList[j].longitude != 0) {
-            //  this.geoloc.articleTitle = this.articles[i].articleTitle
-            //  console.log("geoloc: " + this.geoloc)
             const popupInfo = `<center><span class='author'> ${this.articles[i].authorsList[j].lastName} ${this.articles[i].authorsList[j].foreName}</span><br>
             <span class='adress'> ${this.articles[i].authorsList[j].googleFormatedAdress}</span>`
             // <a class="btn btn-outline-secondary btn-sm" data-toggle="collapse" href="${this.articles[i].pubmedUrl}" target="_blank" rel="noopener noreferrer" >More Details</a><center>`
@@ -116,6 +111,7 @@ export class MapComponent implements OnInit {
               .on('mouseout', function (e) { this.closePopup() })
 
             markerCluster.addLayer(pins)
+
           }
         }
       }
@@ -126,29 +122,54 @@ export class MapComponent implements OnInit {
     // this.getArticleById(this.pmid)
 
     //Legend specific
-    var legend= new L.Control({
+    var legend = new L.Control({
       position: "bottomright"
     })
 
-      legend.onAdd = function(map) {
+    legend.onAdd = function (map) {
       var div = L.DomUtil.create("div", "legend");
-       div.innerHTML += "<h5>Legend</h5>";
-       div.innerHTML += '<img src=/assets/pins/pins_icons/bluepinIcon.png></img><span>  First author</span><br>';
-       div.innerHTML += '<img src=/assets/pins/pins_icons/redpinIcon.png></img><span>  Last author</span><br>';
-       div.innerHTML += '<img src=/assets/pins/pins_icons/yellowpinIcon.png></img><span>  Intermediate author</span><br>';
-       return div;
-     };
-     legend.addTo(mymap);
-     
+      div.innerHTML += "<h5>Legend</h5>";
+      div.innerHTML += '<img src=/assets/pins/pins_icons/bluepinIcon.png></img><span>  First author</span><br>';
+      div.innerHTML += '<img src=/assets/pins/pins_icons/redpinIcon.png></img><span>  Last author</span><br>';
+      div.innerHTML += '<img src=/assets/pins/pins_icons/yellowpinIcon.png></img><span>  Intermediate author</span><br>';
+      return div;
+    };
+    legend.addTo(mymap);
+
 
   }
 
-  // add myCustomIcon
-  // myIcon = L.icon({
-  //   iconUrl: 'assets/pins/bluepin.png',
-  //   iconSize: [40, 50],
-  //   iconAnchor: [20, 20]
-  // });
+
+// showPins(articles: Article[]) {
+//   for (let i in articles) {
+//     for (let j in articles[i].authorsList) {
+//       if (articles[i].authorsList[j].latitude != 0 && articles[i].authorsList[j].longitude != 0) {
+//         const popupInfo = `<center><span class='author'> ${articles[i].authorsList[j].lastName} ${articles[i].authorsList[j].foreName}</span><br>
+//         <span class='adress'> ${articles[i].authorsList[j].googleFormatedAdress}</span>`
+//         let authorRank = j;
+//         let markerPin
+//         switch (authorRank) {
+//           case ((articles[i].authorsList.length - 1).toString()):
+//             markerPin = this.redpin
+//             break
+//           case ('0'):
+//             markerPin = this.bluepin
+//             break
+//           default:
+//             markerPin = this.yellowpin
+//         }
+//         let pins = this.marker(L.latLng(articles[i].authorsList[j].latitude, articles[i].authorsList[j].longitude), { icon: markerPin, riseOnHover: true })
+//           .on("click", this.showDetailsCard.bind(this, articles[i]))
+//           .bindPopup(popupInfo, this.customOptions)
+//           .on('mouseover', function (e) { this.openPopup() })
+//           .on('mouseout', function (e) { this.closePopup() })
+
+//         this.markerCluster.addLayer(pins)
+
+//       }
+//     }
+//   }
+// }
 
   customOptions = {
     'maxWidth': 1000,
@@ -194,9 +215,26 @@ export class MapComponent implements OnInit {
     }
   }
 
+  addFavoriteArticle() {
+    this.favoriteArticle._id = sessionStorage.getItem('_id')
+    this.favoriteArticle.username = this.tokenStorage.getUsername()
+    this.authService.addArticle(this.favoriteArticle).subscribe(
+      data => {
+        console.log(`${this.favoriteArticle.username} add the article with id ${this.favoriteArticle._id}`)
+      }
+    )
+  }
 
+  
 
-
+  findArticleByTitle(wordTitle) {
+    this.articlesApiService.getArticleByTitle(wordTitle).subscribe(data => {
+      this.articles = data
+      console.log(this.articles)
+    }, (error) => {
+      console.log(error)
+    })
+  }
 }
 
 

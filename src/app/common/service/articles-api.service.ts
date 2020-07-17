@@ -27,7 +27,36 @@ export class ArticlesApiService {
     let url = `http://localhost:9998/article-api/public/article/pmid/${articleId}`
     return this.httpClient.get<Article>(url);
   }
+
+  public getArticleByTitle(wordTitle) : Observable<Article[]>{
+    let url = `http://localhost:9998/article-api/public/articles/title/${wordTitle}`
+    return this.httpClient.get<Article[]>(url);
+  }
+
+  public getArticleByDate(date) : Observable<Article[]>{
+    let url = `http://localhost:9998/article-api/public/articles?dateMini=${date}`
+    return this.httpClient.get<Article[]>(url);
+  }
+
+  public getArticleByJournal(journal) : Observable<Article[]>{
+    let url = `http://localhost:9998/article-api/public/articles/journal/${journal}`
+    return this.httpClient.get<Article[]>(url);
+  }
   
+  public getArticleByAbstract(wordAbstract) : Observable<Article[]>{
+    let url = `http://localhost:9998/article-api/public/articles/abstract/${wordAbstract}`
+    return this.httpClient.get<Article[]>(url);
+  }
+
+  public getArticleByKeyword(keyword) : Observable<Article[]>{
+    let url = `http://localhost:9998/article-api/public/articles/keywords/${keyword}`
+    return this.httpClient.get<Article[]>(url);
+  }
+
+  public getArticleByAuthor(author) : Observable<Article[]>{
+    let url = `http://localhost:9998/article-api/public/articles/author/${author}`
+    return this.httpClient.get<Article[]>(url);
+  }
 }
 
 
