@@ -8,16 +8,63 @@
     height: 700px;
 }
 
+label {
+    color: whitesmoke;
+  }
 
 #divLoginForm {
     text-align: center;
     display: block;
 }
 
-#loginForm
-{
-    display: inline-block;
+// #loginForm
+// {
+//     display: inline-block;
  
+// }
+
+.form-control {
+    text-align: center;
+    border-radius: 30px;
+    background-color: whitesmoke;
+    border: 1px solid grey;
+  }
+
+  #loginFormWithButton {
+    top: 100px;
+    margin: auto;
+    padding: 70px 70px;
+    border: 1px solid grey;
+    border-radius: 30px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.4);
+    box-shadow: 1px 1px 1px 1px grey;
+  }
+
+  #loginButton {
+    margin: 10px;
+    background-color: royalblue;
+    color: whitesmoke;
+    transition-duration: 0.4s;
+  }
+
+  #loginButton:hover {
+    background-color: dodgerblue;
+    color: white;
+  }
+
+  #signupButton {
+    margin: 10px;
+    background-color: royalblue;
+    color: whitesmoke;
+    text-align: right;  
+    transition-duration: 0.4s;
 }
+
+#signupButton:hover {
+    background-color: dodgerblue;
+    color: white;
+  }
+  
 
 
