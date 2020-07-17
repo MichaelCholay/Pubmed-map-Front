@@ -32,5 +32,5 @@ jobs:
       - name: npm ci and npm run build
         run: |
           npm ci
-          npm rimraf ./dist
-          npm build --prod
+          ng rimraf ./dist
+          ng build --prod
