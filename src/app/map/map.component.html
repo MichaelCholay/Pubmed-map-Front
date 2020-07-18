@@ -13,11 +13,12 @@
                         <i class="fas fa-search h4 text-body"></i>
                     </div>
                     <div class="col">
-                        <input class="form-control form-control-lg form-control-borderless" [(ngModel)] = "value" type="search"
+                        <input class="form-control form-control-lg form-control-borderless" name="titleWord" ngModel #titleWord="ngModel" type="search"
                             placeholder="Search article by Title">
+                            <p>value: {{titleWord.value}}</p>
                     </div>
                     <div class="col-auto">
-                        <button class="btn btn-lg btn-success" type="submit" (onclick)="findArticleByTitle(value)">Search</button>
+                        <button class="btn btn-lg btn-success" type="submit" (onclick)="findArticleByTitle(titleWord.value)">Search</button>
                     </div>
                 </div>
             </form>

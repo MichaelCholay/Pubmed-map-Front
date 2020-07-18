@@ -11,6 +11,7 @@ import { Author } from '../common/model/author';
 import { ArticleResponse } from '../common/model/auth/article-response';
 import { TokenStorageService } from '../common/service/auth/token-storage.service';
 import { AuthService } from '../common/service/auth/auth.service';
+import { NgModel } from '@angular/forms';
 
 
 @Component({
@@ -29,8 +30,8 @@ export class MapComponent implements OnInit {
   author: Author
   authorsList: Author[]
   favoriteArticle: ArticleResponse = new ArticleResponse
-  value
-  
+  titleWord: NgModel
+
 
 
   bluepin = L.icon({ iconUrl: '/assets/pins/bluepin.png', iconSize: [40, 60], iconAnchor: [20, 60], popupAnchor: [0, -30] })
@@ -80,42 +81,25 @@ export class MapComponent implements OnInit {
     // var markerCluster = new L.MarkerClusterGroup()
 
 
-    this.articlesApiService.getArticleByTitle(this.value).subscribe(data => {
+    this.articlesApiService.getAllArticles().subscribe(data => {
       this.articles = data
       console.log(this.articles)
     }, (error) => {
       console.log(error)
-    }, () => { this.showPins(this.articles)
-      // for (let i in this.articles) {
-      //   for (let j in this.articles[i].authorsList) {
-      //     if (this.articles[i].authorsList[j].latitude != 0 && this.articles[i].authorsList[j].longitude != 0) {
-      //       const popupInfo = `<center><span class='author'> ${this.articles[i].authorsList[j].lastName} ${this.articles[i].authorsList[j].foreName}</span><br>
-      //       <span class='adress'> ${this.articles[i].authorsList[j].googleFormatedAdress}</span>`
-      //       // <a class="btn btn-outline-secondary btn-sm" data-toggle="collapse" href="${this.articles[i].pubmedUrl}" target="_blank" rel="noopener noreferrer" >More Details</a><center>`
-      //       let authorRank = j;
-      //       let markerPin
-      //       switch (authorRank) {
-      //         case ((this.articles[i].authorsList.length - 1).toString()):
-      //           markerPin = this.redpin
-      //           break
-      //         case ('0'):
-      //           markerPin = this.bluepin
-      //           break
-      //         default:
-      //           markerPin = this.yellowpin
-      //       }
-      //       let pins = this.marker(L.latLng(this.articles[i].authorsList[j].latitude, this.articles[i].authorsList[j].longitude), { icon: markerPin, riseOnHover: true })
-      //         .on("click", this.showDetailsCard.bind(this, this.articles[i]))
-      //         .bindPopup(popupInfo, this.customOptions)
-      //         .on('mouseover', function (e) { this.openPopup() })
-      //         .on('mouseout', function (e) { this.closePopup() })
-
-      //       this.markerCluster.addLayer(pins)
-
-      //     }
-      //   }
-      // }
+    }, () => {
+      this.showPins(this.articles)
     })
+
+    // this.articlesApiService.getArticleByTitle(this.titleWord).subscribe(data => {
+    //   this.articles = data
+    //   console.log(this.articles)
+    // }, (error) => {
+    //   console.log(error)
+    // }, () => { this.showPins(this.articles)
+    // })
+
+    // this.findArticleByTitle(this.titleWord)
+
     mymap.addLayer(this.markerCluster)
 
     this.closeDetailsCard()
@@ -136,39 +120,54 @@ export class MapComponent implements OnInit {
     };
     legend.addTo(mymap);
 
+    this.findArticleByTitle(this.titleWord.value)
 
   }
 
-showPins(articles: Article[]) {
-  for (let i in articles) {
-    for (let j in articles[i].authorsList) {
-      if (articles[i].authorsList[j].latitude != 0 && articles[i].authorsList[j].longitude != 0) {
-        const popupInfo = `<center><span class='author'> ${articles[i].authorsList[j].lastName} ${articles[i].authorsList[j].foreName}</span><br>
-        <span class='adress'> ${articles[i].authorsList[j].googleFormatedAdress}</span>`
-        let authorRank = j;
-        let markerPin
-        switch (authorRank) {
-          case ((articles[i].authorsList.length - 1).toString()):
-            markerPin = this.redpin
-            break
-          case ('0'):
-            markerPin = this.bluepin
-            break
-          default:
-            markerPin = this.yellowpin
+
+
+  showPins(articles: Article[]) {
+    for (let i in articles) {
+      for (let j in articles[i].authorsList) {
+        if (articles[i].authorsList[j].latitude != 0 && articles[i].authorsList[j].longitude != 0) {
+          const popupInfo = `<center><span class='author'> ${articles[i].authorsList[j].lastName} ${articles[i].authorsList[j].foreName}</span><br>
+        <span class='adress'> ${articles[i].authorsList[j].googleFormatedAdress}</span><br>`
+          let authorRank = j;
+          let markerPin
+          switch (authorRank) {
+            case ((articles[i].authorsList.length - 1).toString()):
+              markerPin = this.redpin
+              break
+            case ('0'):
+              markerPin = this.bluepin
+              break
+            default:
+              markerPin = this.yellowpin
+          }
+          let pins = this.marker(L.latLng(articles[i].authorsList[j].latitude, articles[i].authorsList[j].longitude), { icon: markerPin, riseOnHover: true })
+            .on("click", this.showDetailsCard.bind(this, articles[i]))
+            .bindPopup(popupInfo, this.customOptions)
+            .on('mouseover', function (e) { this.openPopup() })
+            .on('mouseout', function (e) { this.closePopup() })
+
+          this.markerCluster.addLayer(pins)
+
         }
-        let pins = this.marker(L.latLng(articles[i].authorsList[j].latitude, articles[i].authorsList[j].longitude), { icon: markerPin, riseOnHover: true })
-          .on("click", this.showDetailsCard.bind(this, articles[i]))
-          .bindPopup(popupInfo, this.customOptions)
-          .on('mouseover', function (e) { this.openPopup() })
-          .on('mouseout', function (e) { this.closePopup() })
-
-        this.markerCluster.addLayer(pins)
-
       }
     }
   }
-}
+
+  findArticleByTitle(titleWord: string) {
+    console.log("in findArticleByTitle")
+    this.articlesApiService.getArticleByTitle(titleWord).subscribe(data => {
+      this.articles = data
+      console.log(this.articles)
+    }, (error) => {
+      console.log(error)
+    }, () => {
+      this.showPins(this.articles)
+    })
+  }
 
   customOptions = {
     'maxWidth': 1000,
@@ -222,17 +221,6 @@ showPins(articles: Article[]) {
         console.log(`${this.favoriteArticle.username} add the article with id ${this.favoriteArticle._id}`)
       }
     )
-  }
-
-  
-
-  findArticleByTitle(wordTitle) {
-    this.articlesApiService.getArticleByTitle(wordTitle).subscribe(data => {
-      this.articles = data
-      console.log(this.articles)
-    }, (error) => {
-      console.log(error)
-    })
   }
 }
 
