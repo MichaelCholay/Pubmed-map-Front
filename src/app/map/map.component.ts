@@ -77,46 +77,46 @@ export class MapComponent implements OnInit {
     }, {}));
 
     // add markerCluster
-    var markerCluster = new L.MarkerClusterGroup()
+    // var markerCluster = new L.MarkerClusterGroup()
 
 
-    this.articlesApiService.getAllArticles().subscribe(data => {
+    this.articlesApiService.getArticleByTitle(this.value).subscribe(data => {
       this.articles = data
       console.log(this.articles)
     }, (error) => {
       console.log(error)
-    }, () => {
-      for (let i in this.articles) {
-        for (let j in this.articles[i].authorsList) {
-          if (this.articles[i].authorsList[j].latitude != 0 && this.articles[i].authorsList[j].longitude != 0) {
-            const popupInfo = `<center><span class='author'> ${this.articles[i].authorsList[j].lastName} ${this.articles[i].authorsList[j].foreName}</span><br>
-            <span class='adress'> ${this.articles[i].authorsList[j].googleFormatedAdress}</span>`
-            // <a class="btn btn-outline-secondary btn-sm" data-toggle="collapse" href="${this.articles[i].pubmedUrl}" target="_blank" rel="noopener noreferrer" >More Details</a><center>`
-            let authorRank = j;
-            let markerPin
-            switch (authorRank) {
-              case ((this.articles[i].authorsList.length - 1).toString()):
-                markerPin = this.redpin
-                break
-              case ('0'):
-                markerPin = this.bluepin
-                break
-              default:
-                markerPin = this.yellowpin
-            }
-            let pins = this.marker(L.latLng(this.articles[i].authorsList[j].latitude, this.articles[i].authorsList[j].longitude), { icon: markerPin, riseOnHover: true })
-              .on("click", this.showDetailsCard.bind(this, this.articles[i]))
-              .bindPopup(popupInfo, this.customOptions)
-              .on('mouseover', function (e) { this.openPopup() })
-              .on('mouseout', function (e) { this.closePopup() })
+    }, () => { this.showPins(this.articles)
+      // for (let i in this.articles) {
+      //   for (let j in this.articles[i].authorsList) {
+      //     if (this.articles[i].authorsList[j].latitude != 0 && this.articles[i].authorsList[j].longitude != 0) {
+      //       const popupInfo = `<center><span class='author'> ${this.articles[i].authorsList[j].lastName} ${this.articles[i].authorsList[j].foreName}</span><br>
+      //       <span class='adress'> ${this.articles[i].authorsList[j].googleFormatedAdress}</span>`
+      //       // <a class="btn btn-outline-secondary btn-sm" data-toggle="collapse" href="${this.articles[i].pubmedUrl}" target="_blank" rel="noopener noreferrer" >More Details</a><center>`
+      //       let authorRank = j;
+      //       let markerPin
+      //       switch (authorRank) {
+      //         case ((this.articles[i].authorsList.length - 1).toString()):
+      //           markerPin = this.redpin
+      //           break
+      //         case ('0'):
+      //           markerPin = this.bluepin
+      //           break
+      //         default:
+      //           markerPin = this.yellowpin
+      //       }
+      //       let pins = this.marker(L.latLng(this.articles[i].authorsList[j].latitude, this.articles[i].authorsList[j].longitude), { icon: markerPin, riseOnHover: true })
+      //         .on("click", this.showDetailsCard.bind(this, this.articles[i]))
+      //         .bindPopup(popupInfo, this.customOptions)
+      //         .on('mouseover', function (e) { this.openPopup() })
+      //         .on('mouseout', function (e) { this.closePopup() })
 
-            markerCluster.addLayer(pins)
+      //       this.markerCluster.addLayer(pins)
 
-          }
-        }
-      }
+      //     }
+      //   }
+      // }
     })
-    mymap.addLayer(markerCluster)
+    mymap.addLayer(this.markerCluster)
 
     this.closeDetailsCard()
     // this.getArticleById(this.pmid)
@@ -139,37 +139,36 @@ export class MapComponent implements OnInit {
 
   }
 
+showPins(articles: Article[]) {
+  for (let i in articles) {
+    for (let j in articles[i].authorsList) {
+      if (articles[i].authorsList[j].latitude != 0 && articles[i].authorsList[j].longitude != 0) {
+        const popupInfo = `<center><span class='author'> ${articles[i].authorsList[j].lastName} ${articles[i].authorsList[j].foreName}</span><br>
+        <span class='adress'> ${articles[i].authorsList[j].googleFormatedAdress}</span>`
+        let authorRank = j;
+        let markerPin
+        switch (authorRank) {
+          case ((articles[i].authorsList.length - 1).toString()):
+            markerPin = this.redpin
+            break
+          case ('0'):
+            markerPin = this.bluepin
+            break
+          default:
+            markerPin = this.yellowpin
+        }
+        let pins = this.marker(L.latLng(articles[i].authorsList[j].latitude, articles[i].authorsList[j].longitude), { icon: markerPin, riseOnHover: true })
+          .on("click", this.showDetailsCard.bind(this, articles[i]))
+          .bindPopup(popupInfo, this.customOptions)
+          .on('mouseover', function (e) { this.openPopup() })
+          .on('mouseout', function (e) { this.closePopup() })
 
-// showPins(articles: Article[]) {
-//   for (let i in articles) {
-//     for (let j in articles[i].authorsList) {
-//       if (articles[i].authorsList[j].latitude != 0 && articles[i].authorsList[j].longitude != 0) {
-//         const popupInfo = `<center><span class='author'> ${articles[i].authorsList[j].lastName} ${articles[i].authorsList[j].foreName}</span><br>
-//         <span class='adress'> ${articles[i].authorsList[j].googleFormatedAdress}</span>`
-//         let authorRank = j;
-//         let markerPin
-//         switch (authorRank) {
-//           case ((articles[i].authorsList.length - 1).toString()):
-//             markerPin = this.redpin
-//             break
-//           case ('0'):
-//             markerPin = this.bluepin
-//             break
-//           default:
-//             markerPin = this.yellowpin
-//         }
-//         let pins = this.marker(L.latLng(articles[i].authorsList[j].latitude, articles[i].authorsList[j].longitude), { icon: markerPin, riseOnHover: true })
-//           .on("click", this.showDetailsCard.bind(this, articles[i]))
-//           .bindPopup(popupInfo, this.customOptions)
-//           .on('mouseover', function (e) { this.openPopup() })
-//           .on('mouseout', function (e) { this.closePopup() })
+        this.markerCluster.addLayer(pins)
 
-//         this.markerCluster.addLayer(pins)
-
-//       }
-//     }
-//   }
-// }
+      }
+    }
+  }
+}
 
   customOptions = {
     'maxWidth': 1000,
