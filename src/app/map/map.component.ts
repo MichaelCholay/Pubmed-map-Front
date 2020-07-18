@@ -12,6 +12,7 @@ import { ArticleResponse } from '../common/model/auth/article-response';
 import { TokenStorageService } from '../common/service/auth/token-storage.service';
 import { AuthService } from '../common/service/auth/auth.service';
 import { NgModel } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -27,11 +28,13 @@ export class MapComponent implements OnInit {
   geoloc: Geoloc
   marker = L.marker
   markerCluster = new L.MarkerClusterGroup()
+  mymap: any
   author: Author
   authorsList: Author[]
   favoriteArticle: ArticleResponse = new ArticleResponse
-  searchMethod: string = "all"
+  searchMethod: string
   searchTitleWord: string = null;
+  dataSub: Subscription
 
 
   bluepin = L.icon({ iconUrl: '/assets/pins/bluepin.png', iconSize: [40, 60], iconAnchor: [20, 60], popupAnchor: [0, -30] })
@@ -47,7 +50,7 @@ export class MapComponent implements OnInit {
 
 
     // Set map on Paris
-    const mymap = L.map('mapid', { scrollWheelZoom: false }).setView([48.833, 2.333], 2).addControl(L.control.scale());
+    this.mymap = L.map('mapid', { scrollWheelZoom: false }).setView([48.833, 2.333], 2).addControl(L.control.scale());
 
     // List of layers
     var Esri_WorldGrayCanvas = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
@@ -70,8 +73,8 @@ export class MapComponent implements OnInit {
     });
 
     //Control of layers
-    mymap.addLayer(Esri_WorldGrayCanvas); // default layer
-    mymap.addControl(new L.Control.Layers({
+    this.mymap.addLayer(Esri_WorldGrayCanvas); // default layer
+    this.mymap.addControl(new L.Control.Layers({
       "classic map": Esri_WorldStreetMap,
       "light map": Esri_WorldGrayCanvas,
       "black map": CartoDB_DarkMatterNoLabels
@@ -83,11 +86,22 @@ export class MapComponent implements OnInit {
     
     switch (this.searchMethod) {
       case ("title"):
-        this.searchTitleWord
+        console.log("case" + this.searchMethod)
+        // this.searchArticleByTitle()
+        console.log("searchMethodafter: " + this.searchMethod)
+        this.articlesApiService.getArticleByTitle(this.searchTitleWord).subscribe(data => {
+          this.articles = data
+          console.log(this.articles)
+        }, (error) => {
+          console.log(error)
+        }, () => {
+          this.showPins(this.articles)
+        })
         break
-      // default:
-      case ("all"):
-    this.articlesApiService.getAllArticles().subscribe(data => {
+      default:
+      // case ("all"):
+      console.log("case default")
+    this.dataSub = this.articlesApiService.getAllArticles().subscribe(data => {
       this.articles = data
       console.log(this.articles)
     }, (error) => {
@@ -98,7 +112,7 @@ export class MapComponent implements OnInit {
   }
 
 
-    mymap.addLayer(this.markerCluster)
+    // this.mymap.addLayer(this.markerCluster)
 
     this.closeDetailsCard()
     // this.getArticleById(this.pmid)
@@ -116,7 +130,7 @@ export class MapComponent implements OnInit {
       div.innerHTML += '<img src=/assets/pins/pins_icons/yellowpinIcon.png></img><span>  Intermediate author</span><br>';
       return div;
     };
-    legend.addTo(mymap);
+    legend.addTo(this.mymap);
 
   }
 
@@ -148,19 +162,35 @@ export class MapComponent implements OnInit {
             .on('mouseout', function (e) { this.closePopup() })
 
           this.markerCluster.addLayer(pins)
-
         }
       }
     }
+    this.mymap.addLayer(this.markerCluster)
   }
 
+  setSearchMethod(searchMethod: string) {
+  switch (searchMethod) {
+        case ("title"):
+          console.log("case"+ searchMethod)
+          this.searchArticleByTitle()
+          break
+        // default:
+        case ("all"):
+      this.markerCluster.clearLayers()
+      this.dataSub = this.articlesApiService.getAllArticles().subscribe(data => {
+        this.articles = data
+        console.log(this.articles)
+      }, (error) => {
+        console.log(error)
+      }, () => {
+        this.showPins(this.articles)
+      })
+    }
+  }
+  
   searchArticleByTitle() {
-    console.log("in findArticleByTitle " + this.searchTitleWord)
     this.searchMethod = "title"
-    console.log("searchMethodbefore: " + this.searchMethod)
-    //UNSUBSCRIBE
-    this.ngOnInit()
-    console.log("searchMethodafter: " + this.searchMethod)
+    this.markerCluster.clearLayers()
     this.articlesApiService.getArticleByTitle(this.searchTitleWord).subscribe(data => {
       this.articles = data
       console.log(this.articles)
