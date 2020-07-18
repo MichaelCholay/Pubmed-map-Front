@@ -8,6 +8,31 @@
 //   position: relative;
 // }
 
+.navbar {
+  min-height: 100px;
+}
+
+.navbar-brand {
+  padding: 0 0px;
+  height: 100px;
+  line-height: 50px;
+}
+
+.navbar-toggler {
+  /* (80px - button height 34px) / 2 = 23px */
+  margin-top: 10px;
+  padding: 5px 5px !important;
+}
+
+.masthead {
+  height: 100vh;
+  min-height: 500px;
+  background-image: url('https://source.unsplash.com/BtbjCFUvBXs/1920x1080');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 .container {
   position: absolute;
   margin: 20px;

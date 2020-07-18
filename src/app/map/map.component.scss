@@ -1,3 +1,180 @@
-#mapid { height: 500px; width: 100%; position:static;z-index: 0;}
-#articleDetails {display:none; position:absolute; z-index: 1;top:390px;left:40px; border-radius: 10px; padding-right: 50 px;}
-#closeButton { float: right; }
+#mapid {
+    height: 700px;
+    width: 100%;
+    position:relative;
+    z-index: 0;
+}
+
+// #articleDetails { 
+//     display:none; 
+//     position: absolute;
+//     z-index: 1;
+//     top: 200px;
+//     left: 40px;
+//     border-radius: 10px;
+//     width: 40%;
+// }
+
+#cardArticle {
+    display:none; 
+    position: absolute;
+    z-index: 1;
+    top: 170px;
+    left: 40px;
+    border-radius: 10px;
+    padding-right: 10 px;
+    padding-left: 10 px;
+    width: 100%;
+    opacity: .8;
+}
+
+#container {
+    width: 30rem;
+}
+
+h6, h5{
+    text-align: center;  
+    margin: auto;
+    color: royalblue;
+}
+
+#closeButton { 
+    float: right; 
+}
+
+nav > .nav.nav-tabs{
+
+    border: none;
+      color:#fff;
+      background:#272e38;
+      border-radius:10px;
+  
+  }
+  nav > div a.nav-item.nav-link,
+  nav > div a.nav-item.nav-link.active
+  {
+    border: none;
+      padding: 18px 25px;
+      color:#fff;
+      background: grey;
+      border: radius 10px;;
+  }
+  
+  nav > div a.nav-item.nav-link.active:after
+   {
+    content: "";
+    position: relative;
+    bottom: -60px;
+    left: -10%;
+    border: 15px solid transparent;
+    border-top-color:royalblue ;
+  }
+  .tab-content{
+    background: #fdfdfd;
+      line-height: 1.5;
+      border: 1px solid #ddd;
+      border-top:5px solid royalblue;
+      border-bottom:5px solid royalblue;
+      padding:30px 25px;
+  }
+  
+  nav > div a.nav-item.nav-link:hover,
+  nav > div a.nav-item.nav-link:focus
+  {
+    border: none;
+      background: royalblue;
+      color:#fff;
+      border: radius 10px;
+      transition:background 0.20s linear;
+  }
+
+  textarea {
+    padding: 10px;
+    line-height: 1.5;
+    border-radius: 10px;
+    border: 1px solid royalblue;
+    box-shadow: 1px 1px 1px #999;
+    font-size: .8rem;
+    white-space: normal;
+    text-align: justify;
+    width: 100%;
+    height: 200px;
+}
+
+textarea:focus { 
+  outline: none !important;
+  border-color: royalblue;
+  box-shadow: 0 0 10px royalblue;
+}
+
+.btn {
+  color:#FFF;
+  background-color: royalblue !important;
+}
+
+.btn:hover {
+  color:#FFF;
+  background-color: royalblue !important;
+  border-color: grey;
+  border-width: medium;
+}
+
+.btn:focus, .btn:active, .btn.active, .open .dropdown-toggle {
+  background-color: royalblue; 
+  color:#FFF;
+  // border-color: #31347B; 
+}
+
+.material-icons.royalblue { 
+  color: royalblue; 
+  border: none;
+    outline:none;
+}
+/////////////////////////////////
+
+.counter
+{
+    background-color: #eaecf0;
+    text-align: center;
+}
+.employees,.customer,.design,.order
+{
+    margin-top: 70px;
+    margin-bottom: 70px;
+}
+.counter-count
+{
+    font-size: 18px;
+    background-color: royalblue;
+    border-radius: 50%;
+    position: relative;
+    color: #ffffff;
+    text-align: center;
+    line-height: 92px;
+    width: 92px;
+    height: 92px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    display: inline-block;
+}
+
+.employee-p,.customer-p,.order-p,.design-p
+{
+    font-size: 24px;
+    color: #000000;
+    line-height: 34px;
+}
+
+
+
+// .btn-primary:focus {
+//   color: red;
+//   background-color: orange !important;
+// }
+
+// .btn-primary:active {
+//   color: white;
+//   background-color: green !important;
+// }

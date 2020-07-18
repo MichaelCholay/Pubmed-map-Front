@@ -1,4 +1,32 @@
 
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@import '~@angular/material/theming';
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$my-app-primary: mat-palette($mat-indigo);
+$my-app-accent: mat-palette($mat-pink, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$my-app-warn: mat-palette($mat-red);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($my-app-theme);
+
+
 // // Custom Theming for Angular Material
 // // For more information: https://material.angular.io/guide/theming
 // // @import '~@angular/material/theming';
@@ -31,7 +59,7 @@
 
 
 .customPopupMarker .leaflet-popup-content-wrapper {
-    background:darkgray;
+    background: royalblue;
     color: #eee;
     // font-weight: bold;
     font-size: 12px;
@@ -42,10 +70,59 @@
     border-color: black;
 }
 
-.customPopupMarker .mypopup.leaflet-popup-tip {
-    background: red;
-}
+// .customPopupMarker .mypopup.leaflet-popup-tip {
+//     background: red;
+// }
 
 .author { font-size: 14px; font-weight: bold;}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.legend {
+    padding: 6px 8px;
+    font: 14px Arial, Helvetica, sans-serif;
+    background: white;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    line-height: 24px;
+    color: #555;
+    opacity: 0.5;
+  }
+
+  .legend h5 {
+    text-align: center;
+    font-size: 16px;
+    margin: 2px 12px 8px;
+    color: #777;
+  }
+  
+  .legend span {
+    position: relative;
+    color: #777;
+    bottom: 3px;
+  }
+  
+
+//   .legend-header {
+//     transition: .3s transform ease-in-out;
+//   }
+
+//   .material-icons.menu {
+//     transform: rotate(90deg);
+//   }
+//   .legend img {
+//     width: 18px;
+//     height: 18px;
+//     float: left;
+//     margin: 0 8px 0 0;
+//     opacity: 0.7;
+//   }
+  
+//   .legend i.icon {
+//     background-size: 18px;
+//     background-color: rgba(255, 255, 255, 1);
+//   }
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
