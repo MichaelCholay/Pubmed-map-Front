@@ -30,8 +30,8 @@ export class MapComponent implements OnInit {
   author: Author
   authorsList: Author[]
   favoriteArticle: ArticleResponse = new ArticleResponse
-  titleWord: NgModel
-
+  searchMethod: string = "all"
+  searchTitleWord: string = null;
 
 
   bluepin = L.icon({ iconUrl: '/assets/pins/bluepin.png', iconSize: [40, 60], iconAnchor: [20, 60], popupAnchor: [0, -30] })
@@ -80,7 +80,13 @@ export class MapComponent implements OnInit {
     // add markerCluster
     // var markerCluster = new L.MarkerClusterGroup()
 
-
+    
+    switch (this.searchMethod) {
+      case ("title"):
+        this.searchTitleWord
+        break
+      // default:
+      case ("all"):
     this.articlesApiService.getAllArticles().subscribe(data => {
       this.articles = data
       console.log(this.articles)
@@ -89,16 +95,8 @@ export class MapComponent implements OnInit {
     }, () => {
       this.showPins(this.articles)
     })
+  }
 
-    // this.articlesApiService.getArticleByTitle(this.titleWord).subscribe(data => {
-    //   this.articles = data
-    //   console.log(this.articles)
-    // }, (error) => {
-    //   console.log(error)
-    // }, () => { this.showPins(this.articles)
-    // })
-
-    // this.findArticleByTitle(this.titleWord)
 
     mymap.addLayer(this.markerCluster)
 
@@ -120,18 +118,17 @@ export class MapComponent implements OnInit {
     };
     legend.addTo(mymap);
 
-    this.findArticleByTitle(this.titleWord.value)
-
   }
 
-
+  ////// END OF ngOnInit  ////////
 
   showPins(articles: Article[]) {
     for (let i in articles) {
       for (let j in articles[i].authorsList) {
         if (articles[i].authorsList[j].latitude != 0 && articles[i].authorsList[j].longitude != 0) {
           const popupInfo = `<center><span class='author'> ${articles[i].authorsList[j].lastName} ${articles[i].authorsList[j].foreName}</span><br>
-        <span class='adress'> ${articles[i].authorsList[j].googleFormatedAdress}</span><br>`
+        <span class='adress'> ${articles[i].authorsList[j].googleFormatedAdress}</span><br>
+        <span class='email'>email: ${articles[i].authorsList[j].email}</span>`
           let authorRank = j;
           let markerPin
           switch (authorRank) {
@@ -157,9 +154,14 @@ export class MapComponent implements OnInit {
     }
   }
 
-  findArticleByTitle(titleWord: string) {
-    console.log("in findArticleByTitle")
-    this.articlesApiService.getArticleByTitle(titleWord).subscribe(data => {
+  searchArticleByTitle() {
+    console.log("in findArticleByTitle " + this.searchTitleWord)
+    this.searchMethod = "title"
+    console.log("searchMethodbefore: " + this.searchMethod)
+    //UNSUBSCRIBE
+    this.ngOnInit()
+    console.log("searchMethodafter: " + this.searchMethod)
+    this.articlesApiService.getArticleByTitle(this.searchTitleWord).subscribe(data => {
       this.articles = data
       console.log(this.articles)
     }, (error) => {
@@ -168,6 +170,19 @@ export class MapComponent implements OnInit {
       this.showPins(this.articles)
     })
   }
+
+  // findArticleByTitle(searchTitleWord: string) {
+  //   console.log("in findArticleByTitle " + searchTitleWord)
+  //   // titleWord = sessionStorage.getItem("titleWord")
+  //   this.articlesApiService.getArticleByTitle(searchTitleWord).subscribe(data => {
+  //     this.articles = data
+  //     console.log(this.articles)
+  //   }, (error) => {
+  //     console.log(error)
+  //   }, () => {
+  //     this.showPins(this.articles)
+  //   })
+  // }
 
   customOptions = {
     'maxWidth': 1000,
