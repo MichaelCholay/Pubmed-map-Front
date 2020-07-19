@@ -11,7 +11,7 @@ import { Author } from '../common/model/author';
 import { ArticleResponse } from '../common/model/auth/article-response';
 import { TokenStorageService } from '../common/service/auth/token-storage.service';
 import { AuthService } from '../common/service/auth/auth.service';
-import { NgModel } from '@angular/forms';
+import { NgModel, FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 
@@ -34,7 +34,15 @@ export class MapComponent implements OnInit {
   favoriteArticle: ArticleResponse = new ArticleResponse
   searchMethod: string
   searchTitleWord: string = null;
+  searchAbstract: string = null;
+  searchKeyword: string = null;
+  searchAuthor: string = null;
   dataSub: Subscription
+  floatLabelControl = new FormControl('auto');
+  options: FormGroup;
+  searchFilter: string = "AllArticles";
+  selected: string = "AllArticles";
+  filters: string[] = ['Title', 'Abstract', 'Keywords', 'Author', 'Journal', 'Date'];
 
 
   bluepin = L.icon({ iconUrl: '/assets/pins/bluepin.png', iconSize: [40, 60], iconAnchor: [20, 60], popupAnchor: [0, -30] })
@@ -47,7 +55,6 @@ export class MapComponent implements OnInit {
   constructor(private articlesApiService: ArticlesApiService, private tokenStorage: TokenStorageService, private authService: AuthService) { }
 
   ngOnInit(): void {
-
 
     // Set map on Paris
     this.mymap = L.map('mapid', { scrollWheelZoom: false }).setView([48.833, 2.333], 2).addControl(L.control.scale());
@@ -132,9 +139,13 @@ export class MapComponent implements OnInit {
     };
     legend.addTo(this.mymap);
 
+
+    var filter = document.getElementById("checkbox").click
+  console.log("filter "+filter)
   }
 
   ////// END OF ngOnInit  ////////
+
 
   showPins(articles: Article[]) {
     for (let i in articles) {
@@ -201,18 +212,44 @@ export class MapComponent implements OnInit {
     })
   }
 
-  // findArticleByTitle(searchTitleWord: string) {
-  //   console.log("in findArticleByTitle " + searchTitleWord)
-  //   // titleWord = sessionStorage.getItem("titleWord")
-  //   this.articlesApiService.getArticleByTitle(searchTitleWord).subscribe(data => {
-  //     this.articles = data
-  //     console.log(this.articles)
-  //   }, (error) => {
-  //     console.log(error)
-  //   }, () => {
-  //     this.showPins(this.articles)
-  //   })
-  // }
+  searchArticleByabstract() {
+    this.searchMethod = "abstract"
+    this.markerCluster.clearLayers()
+    this.articlesApiService.getArticleByAbstract(this.searchAbstract).subscribe(data => {
+      this.articles = data
+      console.log(this.articles)
+    }, (error) => {
+      console.log(error)
+    }, () => {
+      this.showPins(this.articles)
+    })
+  }
+
+  searchArticleByKeyword() {
+    this.searchMethod = "keyword"
+    this.markerCluster.clearLayers()
+    this.articlesApiService.getArticleByAbstract(this.searchKeyword).subscribe(data => {
+      this.articles = data
+      console.log(this.articles)
+    }, (error) => {
+      console.log(error)
+    }, () => {
+      this.showPins(this.articles)
+    })
+  }
+
+  searchArticleByAuthor() {
+    this.searchMethod = "author"
+    this.markerCluster.clearLayers()
+    this.articlesApiService.getArticleByAuthor(this.searchAuthor).subscribe(data => {
+      this.articles = data
+      console.log(this.articles)
+    }, (error) => {
+      console.log(error)
+    }, () => {
+      this.showPins(this.articles)
+    })
+  }
 
   customOptions = {
     'maxWidth': 1000,
@@ -268,34 +305,3 @@ export class MapComponent implements OnInit {
     )
   }
 }
-
-
-  // get id of an article 
-  // getArticlePmid(article: Article) {
-  //   console.log(this.articlePmid)
-  // this.articlePmid = article._id.toString()
-  // sessionStorage.setItem("id", this.articlePmid)
-  // this._router.navigate(['/articleDetails', this.articlePmid])
-  // }
-
-
-  // find an article by id
-  // findArticlebyPmid(id: string) {
-  //   this.articlesApiService.getIdArticle(id).subscribe(
-  //     data => { this.article = data }
-  //   )
-  // }
-  // mymap.panTo(L.latLng(this.geoloc[0].latitude,this.geoloc[0].longitude))
-  // })
-
-
-
-
-
-  // add a search bar for adress
-  // const searchControl = new GeoSearchControl({
-  //   style: 'button',
-  //   provider: new OpenStreetMapProvider(),
-  //   autoComplete: false,
-  // });
-  // mymap.addControl(searchControl)

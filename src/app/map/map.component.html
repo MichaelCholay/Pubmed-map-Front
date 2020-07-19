@@ -1,8 +1,3 @@
-<br>
-<br>
-<br>
-<br>
-
 <div class="container">
     <br />
     <div class="row justify-content-center">
@@ -12,18 +7,91 @@
                     <div class="col-auto">
                         <i class="fas fa-search h4 text-body"></i>
                     </div>
+
+
+                    <!-- <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Search by</button>
+                          <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Title</a>
+                            <a class="dropdown-item" href="#">Author</a>
+                            <a class="dropdown-item" href="#">Abstract</a>
+                            <a class="dropdown-item" href="#">Keyword</a>
+                            <div role="separator" class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#" value>No filter</a>
+                          </div>
+                        </div>
+                        <input type="text" class="form-control" aria-label="Text input with dropdown button" placeholder="Search in title, abstract, keywords or by author ...">
+                      </div> -->
+
+                    <!-- <input type="text" class="form-control" aria-label="Text input with radio button"
+                        placeholder="zrzr"> -->
+                    <!-- </div> -->
+
+                    <!-- <div class="example-container">
+                    <form [formGroup]="options">
+                        <div>
+                            <label id="example-radio-group-label"><strong>Search box</strong></label>
+                            <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+                                [(ngModel)]="searchFilter" name="searchFilter" [formControl]="floatLabelControl">
+                                <mat-radio-button class="example-radio-button" name="AllArticles" value="AllArticles"
+                                    checked="checked">All articles</mat-radio-button>
+                                <mat-radio-button name="Title" value="Title">Title</mat-radio-button>
+                                <mat-radio-button name="Abstract" value="Abstract">Abstract</mat-radio-button>
+                                <mat-radio-button name="Keywords" value="Keywords">Keywords</mat-radio-button>
+                                <mat-radio-button name="Author" value="Author">Author</mat-radio-button>
+                                <mat-radio-button name="Journal" value="Journal">Journal</mat-radio-button>
+                                <mat-radio-button name="Date" value="Date">Date</mat-radio-button>
+                                <mat-radio-button class="example-radio-button" *ngFor="let filter of filters"
+                                    [value]="filter">{{searchFilter}}</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                    </form>
+                </div> -->
+
                     <div class="col">
-                        <input [(ngModel)]="searchTitleWord" class="form-control form-control-lg form-control-borderless" name="titleWord"  type="search"
-                            placeholder="Search article by Title">
+                        <input [(ngModel)]="searchTitleWord"
+                            class="form-control form-control-lg form-control-borderless" name="titleWord" type="search"
+                            placeholder="Search in title">
                     </div>
                     <div class="col-auto">
-                        <button class="btn btn-lg btn-success" type="submit" (click)="searchArticleByTitle()">Search</button>
+                        <button class="btn btn-lg btn-success" type="submit"
+                            (click)="searchArticleByTitle()">Search</button>
+                    </div><br>
+                    <div class="col">
+                        <input [(ngModel)]="searchAbstract"
+                            class="form-control form-control-lg form-control-borderless" name="abstractWord" type="search"
+                            placeholder="Search in abstract">
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-lg btn-success" type="submit"
+                            (click)="searchArticleByabstract()">Search</button>
+                    </div>
+                    <div class="col">
+                        <input [(ngModel)]="searchKeyword"
+                            class="form-control form-control-lg form-control-borderless" name="keyword" type="search"
+                            placeholder="Search a keyword">
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-lg btn-success" type="submit"
+                            (click)="searchArticleByKeyword()">Search</button>
+                    </div>
+                    <div class="col">
+                        <input [(ngModel)]="searchAuthor"
+                            class="form-control form-control-lg form-control-borderless" name="author" type="search"
+                            placeholder="Search an author">
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-lg btn-success" type="submit"
+                            (click)="searchArticleByAuthor()">Search</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
 </div>
+<br>
+
 
 
 
