@@ -4,25 +4,27 @@
         <div class="col-12 col-md-10 col-lg-8">
             <form class="card card-sm">
                 <div class="card-body row no-gutters align-items-center">
-                    <div class="col-auto">
+                    <!-- <div class="col-auto">
                         <i class="fas fa-search h4 text-body"></i>
-                    </div>
+                    </div> -->
 
 
-                    <!-- <div class="input-group mb-3">
+                    <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                          <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Search by</button>
-                          <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Title</a>
-                            <a class="dropdown-item" href="#">Author</a>
-                            <a class="dropdown-item" href="#">Abstract</a>
-                            <a class="dropdown-item" href="#">Keyword</a>
-                            <div role="separator" class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#" value>No filter</a>
-                          </div>
+                            <!-- <button class="btn btn-outline-secondary dropdown-toggle"  type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Search by</button> -->
+                            <select id=selectMenu>
+                                <option value="noFilter">No filter</option>
+                                <option value="title">Title</option>
+                                <option value="author">Author</option>
+                                <option value="abstract">Abstract</option>
+                            </select>
                         </div>
-                        <input type="text" class="form-control" aria-label="Text input with dropdown button" placeholder="Search in title, abstract, keywords or by author ...">
-                      </div> -->
+                        <input type="text" id="searchText" class="form-control" aria-label="Text input with dropdown button"
+                            placeholder="Search in title, abstract or by author ...">
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-lg btn-success" type="submit" (click)="getFilter()">Search</button>
+                    </div>
 
                     <!-- <input type="text" class="form-control" aria-label="Text input with radio button"
                         placeholder="zrzr"> -->
@@ -49,15 +51,17 @@
                     </form>
                 </div> -->
 
-                    <div class="col">
+                    <!-- <div class="col">
                         <input [(ngModel)]="searchTitleWord"
                             class="form-control form-control-lg form-control-borderless" name="titleWord" type="search"
                             placeholder="Search in title">
                     </div>
                     <div class="col-auto">
                         <button class="btn btn-lg btn-success" type="submit"
-                            (click)="searchArticleByTitle()">Search</button>
+                        (click)="searchArticleByTitle()">Search</button>
                     </div>
+                    </div>
+                                    <div class="card-body row no-gutters align-items-center">
                     <div class="col">
                         <input [(ngModel)]="searchAbstract"
                             class="form-control form-control-lg form-control-borderless" name="abstractWord" type="search"
@@ -67,15 +71,15 @@
                         <button class="btn btn-lg btn-success" type="submit"
                             (click)="searchArticleByabstract()">Search</button>
                     </div>
-                    <div class="col">
-                        <input [(ngModel)]="searchKeyword"
+                    <div class="col"> -->
+                    <!-- <input [(ngModel)]="searchKeyword"
                             class="form-control form-control-lg form-control-borderless" name="keyword" type="search"
                             placeholder="Search a keyword">
                     </div>
                     <div class="col-auto">
                         <button class="btn btn-lg btn-success" type="submit"
-                            (click)="searchArticleByKeyword()">Search</button>
-                    </div>
+                            (click)="searchArticleByKeyword()">Search</button> -->
+                    <!-- </div>
                     <div class="col">
                         <input [(ngModel)]="searchAuthor"
                             class="form-control form-control-lg form-control-borderless" name="author" type="search"
@@ -84,6 +88,10 @@
                     <div class="col-auto">
                         <button class="btn btn-lg btn-success" type="submit"
                             (click)="searchArticleByAuthor()">Search</button>
+                    </div> -->
+                    <div class="col-auto">
+                        <button class="btn btn-lg btn-success" type="submit"
+                            (click)="searchAllArticles()">Reset search</button>
                     </div>
                 </div>
             </form>

@@ -13,6 +13,7 @@ import { TokenStorageService } from '../common/service/auth/token-storage.servic
 import { AuthService } from '../common/service/auth/auth.service';
 import { NgModel, FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { normalizePassiveListenerOptions } from '@angular/cdk/platform';
 
 
 @Component({
@@ -33,16 +34,18 @@ export class MapComponent implements OnInit {
   authorsList: Author[]
   favoriteArticle: ArticleResponse = new ArticleResponse
   searchMethod: string
-  searchTitleWord: string = null;
-  searchAbstract: string = null;
-  searchKeyword: string = null;
-  searchAuthor: string = null;
+  query: string = null;
+  // searchTitleWord: string = null;
+  // searchAbstract: string = null;
+  // searchKeyword: string = null;
+  // searchAuthor: string = null;
   dataSub: Subscription
   floatLabelControl = new FormControl('auto');
   options: FormGroup;
-  searchFilter: string = "AllArticles";
-  selected: string = "AllArticles";
-  filters: string[] = ['Title', 'Abstract', 'Keywords', 'Author', 'Journal', 'Date'];
+  output: string = "all";
+  // searchFilter: string = "AllArticles";
+  // selected: string = "AllArticles";
+  // filters: string[] = ['Title', 'Abstract', 'Keywords', 'Author', 'Journal', 'Date'];
 
 
   bluepin = L.icon({ iconUrl: '/assets/pins/bluepin.png', iconSize: [40, 60], iconAnchor: [20, 60], popupAnchor: [0, -30] })
@@ -90,33 +93,34 @@ export class MapComponent implements OnInit {
     // add markerCluster
     // var markerCluster = new L.MarkerClusterGroup()
 
-    
-    switch (this.searchMethod) {
-      case ("title"):
-        console.log("case" + this.searchMethod)
-        // this.searchArticleByTitle()
-        console.log("searchMethodafter: " + this.searchMethod)
-        this.articlesApiService.getArticleByTitle(this.searchTitleWord).subscribe(data => {
-          this.articles = data
-          console.log(this.articles)
-        }, (error) => {
-          console.log(error)
-        }, () => {
-          this.showPins(this.articles)
-        })
-        break
-      default:
-      // case ("all"):
-      console.log("case default")
-    this.dataSub = this.articlesApiService.getAllArticles().subscribe(data => {
-      this.articles = data
-      console.log(this.articles)
-    }, (error) => {
-      console.log(error)
-    }, () => {
-      this.showPins(this.articles)
-    })
-  }
+
+    this.setSearchMethod(this.output)
+    //   switch (this.searchMethod) {
+    //     case ("title"):
+    //       console.log("case" + this.searchMethod)
+    //       // this.searchArticleByTitle()
+    //       console.log("searchMethodafter: " + this.searchMethod)
+    //       this.articlesApiService.getArticleByTitle(this.searchTitleWord).subscribe(data => {
+    //         this.articles = data
+    //         console.log(this.articles)
+    //       }, (error) => {
+    //         console.log(error)
+    //       }, () => {
+    //         this.showPins(this.articles)
+    //       })
+    //       break
+    //     default:
+    //     // case ("all"):
+    //     console.log("case default")
+    //   this.dataSub = this.articlesApiService.getAllArticles().subscribe(data => {
+    //     this.articles = data
+    //     console.log(this.articles)
+    //   }, (error) => {
+    //     console.log(error)
+    //   }, () => {
+    //     this.showPins(this.articles)
+    //   })
+    // }
 
 
     // this.mymap.addLayer(this.markerCluster)
@@ -141,7 +145,7 @@ export class MapComponent implements OnInit {
 
 
     var filter = document.getElementById("checkbox").click
-  console.log("filter "+filter)
+    console.log("filter " + filter)
   }
 
   ////// END OF ngOnInit  ////////
@@ -179,30 +183,48 @@ export class MapComponent implements OnInit {
     this.mymap.addLayer(this.markerCluster)
   }
 
+
+  getFilter() {
+    var selectElement = <HTMLInputElement>document.querySelector('#selectMenu');
+    this.output = selectElement.value;
+    console.log("select value: " + this.output)
+    this.query = (document.getElementById("searchText") as HTMLInputElement).value
+    console.log("searchTitleWord: " + this.query)
+    this.setSearchMethod(this.output)
+  }
+
   setSearchMethod(searchMethod: string) {
-  switch (searchMethod) {
-        case ("title"):
-          console.log("case"+ searchMethod)
-          this.searchArticleByTitle()
-          break
-        // default:
-        case ("all"):
-      this.markerCluster.clearLayers()
-      this.dataSub = this.articlesApiService.getAllArticles().subscribe(data => {
-        this.articles = data
-        console.log(this.articles)
-      }, (error) => {
-        console.log(error)
-      }, () => {
-        this.showPins(this.articles)
-      })
+    switch (searchMethod) {
+      case ("title"):
+        console.log("case " + searchMethod)
+        this.searchArticleByTitle()
+        break
+      case ("abstract"):
+        console.log("case " + searchMethod)
+        this.searchArticleByabstract()
+        break
+      case ("author"):
+        console.log("case " + searchMethod)
+        this.searchArticleByAuthor()
+        break
+      // default:
+      case ("all"):
+        this.markerCluster.clearLayers()
+        this.dataSub = this.articlesApiService.getAllArticles().subscribe(data => {
+          this.articles = data
+          console.log(this.articles)
+        }, (error) => {
+          console.log(error)
+        }, () => {
+          this.showPins(this.articles)
+        })
     }
   }
-  
+
   searchArticleByTitle() {
-    this.searchMethod = "title"
+    // this.searchMethod = "title"
     this.markerCluster.clearLayers()
-    this.articlesApiService.getArticleByTitle(this.searchTitleWord).subscribe(data => {
+    this.articlesApiService.getArticleByTitle(this.query).subscribe(data => {
       this.articles = data
       console.log(this.articles)
     }, (error) => {
@@ -213,22 +235,9 @@ export class MapComponent implements OnInit {
   }
 
   searchArticleByabstract() {
-    this.searchMethod = "abstract"
+    // this.searchMethod = "abstract"
     this.markerCluster.clearLayers()
-    this.articlesApiService.getArticleByAbstract(this.searchAbstract).subscribe(data => {
-      this.articles = data
-      console.log(this.articles)
-    }, (error) => {
-      console.log(error)
-    }, () => {
-      this.showPins(this.articles)
-    })
-  }
-
-  searchArticleByKeyword() {
-    this.searchMethod = "keyword"
-    this.markerCluster.clearLayers()
-    this.articlesApiService.getArticleByAbstract(this.searchKeyword).subscribe(data => {
+    this.articlesApiService.getArticleByAbstract(this.query).subscribe(data => {
       this.articles = data
       console.log(this.articles)
     }, (error) => {
@@ -239,9 +248,21 @@ export class MapComponent implements OnInit {
   }
 
   searchArticleByAuthor() {
-    this.searchMethod = "author"
+    // this.searchMethod = "author"
     this.markerCluster.clearLayers()
-    this.articlesApiService.getArticleByAuthor(this.searchAuthor).subscribe(data => {
+    this.articlesApiService.getArticleByAuthor(this.query).subscribe(data => {
+      this.articles = data
+      console.log(this.articles)
+    }, (error) => {
+      console.log(error)
+    }, () => {
+      this.showPins(this.articles)
+    })
+  }
+
+  searchAllArticles() {
+    this.markerCluster.clearLayers()
+    this.dataSub = this.articlesApiService.getAllArticles().subscribe(data => {
       this.articles = data
       console.log(this.articles)
     }, (error) => {
