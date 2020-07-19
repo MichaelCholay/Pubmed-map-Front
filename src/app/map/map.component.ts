@@ -43,6 +43,7 @@ export class MapComponent implements OnInit {
   floatLabelControl = new FormControl('auto');
   options: FormGroup;
   output: string = "all";
+  // searchBarDisable: boolean = true;
   // searchFilter: string = "AllArticles";
   // selected: string = "AllArticles";
   // filters: string[] = ['Title', 'Abstract', 'Keywords', 'Author', 'Journal', 'Date'];
@@ -58,6 +59,8 @@ export class MapComponent implements OnInit {
   constructor(private articlesApiService: ArticlesApiService, private tokenStorage: TokenStorageService, private authService: AuthService) { }
 
   ngOnInit(): void {
+
+    (document.getElementById("searchText") as HTMLOptionElement).disabled = true;
 
     // Set map on Paris
     this.mymap = L.map('mapid', { scrollWheelZoom: false }).setView([48.833, 2.333], 2).addControl(L.control.scale());
@@ -193,6 +196,17 @@ export class MapComponent implements OnInit {
     this.setSearchMethod(this.output)
   }
 
+  updateSearchBar() {
+    var selectElement = <HTMLInputElement>document.querySelector('#selectMenu');
+    if (selectElement.value != "no filter"){
+      (document.getElementById("searchText") as HTMLOptionElement).disabled = false;
+      (document.getElementById("searchText") as HTMLInputElement).placeholder = `Search by ${selectElement.value}`
+    } else {
+      (document.getElementById("searchText") as HTMLOptionElement).disabled = true;
+      (document.getElementById("searchText") as HTMLInputElement).placeholder = "Search in title, abstract or by author ..."
+    }
+  }
+
   setSearchMethod(searchMethod: string) {
     switch (searchMethod) {
       case ("title"):
@@ -261,7 +275,9 @@ export class MapComponent implements OnInit {
   }
 
   searchAllArticles() {
-    this.markerCluster.clearLayers()
+    this.markerCluster.clearLayers();
+    (document.getElementById("searchText") as HTMLInputElement).value = '';
+    (document.getElementById('noFilter') as HTMLOptionElement).selected = true
     this.dataSub = this.articlesApiService.getAllArticles().subscribe(data => {
       this.articles = data
       console.log(this.articles)

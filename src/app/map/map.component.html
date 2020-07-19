@@ -12,18 +12,19 @@
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <!-- <button class="btn btn-outline-secondary dropdown-toggle"  type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Search by</button> -->
-                            <select id=selectMenu>
-                                <option value="noFilter">No filter</option>
+                            <select id="selectMenu" (change)="updateSearchBar()">
+                                <option value="no filter" id="noFilter" selected>No filter</option>
                                 <option value="title">Title</option>
                                 <option value="author">Author</option>
                                 <option value="abstract">Abstract</option>
                             </select>
                         </div>
-                        <input type="text" id="searchText" class="form-control" aria-label="Text input with dropdown button"
+                        <input type="text" id="searchText" 
+                            aria-label="Text input with dropdown button"
                             placeholder="Search in title, abstract or by author ...">
-                    </div>
-                    <div class="col-auto">
-                        <button class="btn btn-lg btn-success" type="submit" (click)="getFilter()">Search</button>
+                        <div class="col-auto">
+                            <button class="btn btn-lg btn-success" type="submit" (click)="getFilter()">Search</button>
+                        </div>
                     </div>
 
                     <!-- <input type="text" class="form-control" aria-label="Text input with radio button"
@@ -90,8 +91,8 @@
                             (click)="searchArticleByAuthor()">Search</button>
                     </div> -->
                     <div class="col-auto">
-                        <button class="btn btn-lg btn-success" type="submit"
-                            (click)="searchAllArticles()">Reset search</button>
+                        <button class="btn btn-lg btn-success" type="submit" (click)="searchAllArticles()">Reset
+                            search</button>
                     </div>
                 </div>
             </form>
