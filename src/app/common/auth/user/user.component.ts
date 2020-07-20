@@ -17,6 +17,7 @@ export class UserComponent implements OnInit {
   column;
   info;
   favoritesList: FavoriteArticle[]
+  isEmpty: boolean = true
 
   constructor(private userService: UserService, private token: TokenStorageService, private favorisService: FavorisService, private articleService: ArticlesApiService) { }
 
@@ -43,17 +44,14 @@ export class UserComponent implements OnInit {
   }
 
   getListIdFavorites() {
-    var headers = document.getElementsByTagName("th");
-    for (var i = 0; i < headers.length; i++) {
-      console.log(headers.length)
-      headers[i].innerText = headers[i].innerText.replace("_id", "PMID")
-      //  .replace("Female<br>contestant", "♀");
-    }
     let username = this.token.getUsername()
     this.favorisService.getAllFavorite(username).subscribe(
       data => {
         this.favoritesList = data
         this.getArticleById(this.favoritesList)
+        if (this.favoritesList.length != 0) {
+          this.isEmpty = false
+        }
       }
     )
   }
