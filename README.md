@@ -43,7 +43,8 @@ Then, set environment variables (`articleHost` and `jwtHost`) for those differen
  
 ### Run
 In the root directory:
-  - build the project: `ng build`
+  - build the project: `ng build` for dev environment with its variables
+  - or build with `ng build --configuration=production`for prod environment with its variables
   - run the project: `ng serve -o`
   - got to `http://localhost:4200`with your favorite web browser
 #
