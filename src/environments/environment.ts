@@ -3,6 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+  articleHost: 'http://localhost:9998',
+	jwtHost: 'https://localhost:9997',
   production: false
 };
 
