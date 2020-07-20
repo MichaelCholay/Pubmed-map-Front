@@ -2,7 +2,7 @@ name: Angular CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, MichaelCholay-patch-1 ]
   pull_request:
     branches: [ master ]
 

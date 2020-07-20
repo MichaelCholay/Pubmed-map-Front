@@ -36,15 +36,19 @@
           <div class="form-group">
             <label for="password">Password</label>
             <input type="password" class="form-control" name="password" [(ngModel)]="form.password" #password="ngModel" placeholder="Password"
-              required minlength="6" /><br>
+              required minlength="6" />
+              <!-- <p style="font-size: smaller;">All fileds are required</p> -->
+              <p style="font-size: smaller; color: cornsilk;">* Password must be at least 6 characters</p>
             <!-- <div *ngIf="f.submitted && password.invalid">
           <div *ngIf="password.errors.required">Password is required</div>
           <div *ngIf="password.errors.minlength">Password must be at least 6 characters</div>
         </div> -->
           </div>
           <div class="form-group">
-            <button class="btn" id=registerButton [disabled]="!f.valid">Register</button>
-            <a routerLink="/login"> <button class="btn btn-secondary" >Cancel</button></a>
+            <a routerLink="/userAccount">
+            <button class="btn" id=registerButton [disabled]="!f.valid" (click)="onSubmit()">Register</button></a>
+            <a routerLink="/login">
+            <button class="btn btn-secondary" >Cancel</button></a>
             <div *ngIf="f.submitted && isSignUpFailed" class="alert alert-warning">
               Signup failed!<br />{{errorMessage}}
             </div>
