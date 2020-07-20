@@ -18,18 +18,18 @@ export class ArticlesApiService {
   constructor(private httpClient: HttpClient) { }
 
   getAllArticles(): Observable<Article[]> {
-    let allArticlesUrl = `http://localhost:9998/article-api/public/articles`
+    let allArticlesUrl = `${this.hostSpring}/article-api/public/articles`
     console.log(allArticlesUrl)
     return this.httpClient.get<Article[]>(allArticlesUrl)
   }
 
   public getArticleByPmid(articleId) : Observable<Article>{
-    let url = `http://localhost:9998/article-api/public/article/pmid/${articleId}`
+    let url = `${this.hostSpring}/article-api/public/article/pmid/${articleId}`
     return this.httpClient.get<Article>(url);
   }
 
   public getArticleByTitle(wordTitle) : Observable<Article[]>{
-    let url = `http://localhost:9998/article-api/public/articles/title/${wordTitle}`
+    let url = `${this.hostSpring}/article-api/public/articles/title/${wordTitle}`
     return this.httpClient.get<Article[]>(url);
   }
 
