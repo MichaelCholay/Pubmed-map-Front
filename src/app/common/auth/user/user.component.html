@@ -1,3 +1,27 @@
-<h4>Content from Server</h4>
+<!-- <h4>Content from Server</h4>
 {{board}}
-{{errorMessage}}
+{{errorMessage}} -->
+<br>
+<br>
+<br>
+
+<div class="well">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>PMID</th>
+                <th>Title</th>
+                <th>Journal</th>
+                <th>Date</th>
+                <th>Pubmed URL</th>
+                <!-- <th *ngFor = "let column of headers" id="=header">{{column}}</th> -->
+            </tr>
+        </thead>
+        <h3 *ngIf="isEmpty" style="text-align:right; font-style: italic;"><br><br><br><br>&ensp; No favorite article ... for the moment</h3>
+        <tbody>
+            <tr *ngFor="let favorite of favoritesList">
+                <td *ngFor="let column of headers">
+                    {{favorite[column]}}</td>
+            </tr>
+        </tbody>
+    </table>

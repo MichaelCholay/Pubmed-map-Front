@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { MatInputModule } from '@angular/material/input'
 import { MapComponent } from './map/map.component';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
@@ -15,6 +15,12 @@ import { RegisterComponent } from './common/auth/register/register.component';
 import { UserComponent } from './common/auth/user/user.component';
 import { httpInterceptorProviders } from './common/model/auth/auth-interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatMenuModule, } from '@angular/material/menu';
+import { MatIconModule } from "@angular/material/icon";
+import {MatSelectModule} from '@angular/material/select';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatRadioModule} from '@angular/material/radio';
+
 
 
 @NgModule({
@@ -33,8 +39,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatMenuModule,
+    MatIconModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatRadioModule,
+    MatInputModule
   ],
+  
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
 })

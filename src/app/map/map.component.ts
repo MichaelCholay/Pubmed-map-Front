@@ -11,6 +11,10 @@ import { Author } from '../common/model/author';
 import { ArticleResponse } from '../common/model/auth/article-response';
 import { TokenStorageService } from '../common/service/auth/token-storage.service';
 import { AuthService } from '../common/service/auth/auth.service';
+import { NgModel, FormControl, FormGroup } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { normalizePassiveListenerOptions } from '@angular/cdk/platform';
+import { FavorisService } from '../common/service/favoris.service';
 
 
 @Component({
@@ -26,11 +30,24 @@ export class MapComponent implements OnInit {
   geoloc: Geoloc
   marker = L.marker
   markerCluster = new L.MarkerClusterGroup()
+  mymap: any
   author: Author
   authorsList: Author[]
   favoriteArticle: ArticleResponse = new ArticleResponse
-  value
-  
+  searchMethod: string
+  query: string = null;
+  // searchTitleWord: string = null;
+  // searchAbstract: string = null;
+  // searchKeyword: string = null;
+  // searchAuthor: string = null;
+  dataSub: Subscription
+  floatLabelControl = new FormControl('auto');
+  options: FormGroup;
+  output: string = "all";
+  // searchBarDisable: boolean = true;
+  // searchFilter: string = "AllArticles";
+  // selected: string = "AllArticles";
+  // filters: string[] = ['Title', 'Abstract', 'Keywords', 'Author', 'Journal', 'Date'];
 
 
   bluepin = L.icon({ iconUrl: '/assets/pins/bluepin.png', iconSize: [40, 60], iconAnchor: [20, 60], popupAnchor: [0, -30] })
@@ -40,13 +57,15 @@ export class MapComponent implements OnInit {
   yellowpin = L.icon({ iconUrl: '/assets/pins/yellowpin.png', iconSize: [40, 60], iconAnchor: [20, 60], popupAnchor: [0, -30] })
 
 
-  constructor(private articlesApiService: ArticlesApiService, private tokenStorage: TokenStorageService, private authService: AuthService) { }
+  constructor(private articlesApiService: ArticlesApiService, private tokenStorage: TokenStorageService, private favoriteService: FavorisService) { }
 
   ngOnInit(): void {
 
+    (document.getElementById("searchText") as HTMLOptionElement).disabled = true;
+    (document.getElementById("searchButton") as HTMLOptionElement).disabled = true;
 
     // Set map on Paris
-    const mymap = L.map('mapid', { scrollWheelZoom: false }).setView([48.833, 2.333], 2).addControl(L.control.scale());
+    this.mymap = L.map('mapid', { scrollWheelZoom: false }).setView([48.833, 2.333], 3).addControl(L.control.scale());
 
     // List of layers
     var Esri_WorldGrayCanvas = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
@@ -69,54 +88,47 @@ export class MapComponent implements OnInit {
     });
 
     //Control of layers
-    mymap.addLayer(Esri_WorldGrayCanvas); // default layer
-    mymap.addControl(new L.Control.Layers({
+    this.mymap.addLayer(Esri_WorldGrayCanvas); // default layer
+    this.mymap.addControl(new L.Control.Layers({
       "classic map": Esri_WorldStreetMap,
       "light map": Esri_WorldGrayCanvas,
       "black map": CartoDB_DarkMatterNoLabels
     }, {}));
 
     // add markerCluster
-    var markerCluster = new L.MarkerClusterGroup()
+    // var markerCluster = new L.MarkerClusterGroup()
 
 
-    this.articlesApiService.getAllArticles().subscribe(data => {
-      this.articles = data
-      console.log(this.articles)
-    }, (error) => {
-      console.log(error)
-    }, () => {
-      for (let i in this.articles) {
-        for (let j in this.articles[i].authorsList) {
-          if (this.articles[i].authorsList[j].latitude != 0 && this.articles[i].authorsList[j].longitude != 0) {
-            const popupInfo = `<center><span class='author'> ${this.articles[i].authorsList[j].lastName} ${this.articles[i].authorsList[j].foreName}</span><br>
-            <span class='adress'> ${this.articles[i].authorsList[j].googleFormatedAdress}</span>`
-            // <a class="btn btn-outline-secondary btn-sm" data-toggle="collapse" href="${this.articles[i].pubmedUrl}" target="_blank" rel="noopener noreferrer" >More Details</a><center>`
-            let authorRank = j;
-            let markerPin
-            switch (authorRank) {
-              case ((this.articles[i].authorsList.length - 1).toString()):
-                markerPin = this.redpin
-                break
-              case ('0'):
-                markerPin = this.bluepin
-                break
-              default:
-                markerPin = this.yellowpin
-            }
-            let pins = this.marker(L.latLng(this.articles[i].authorsList[j].latitude, this.articles[i].authorsList[j].longitude), { icon: markerPin, riseOnHover: true })
-              .on("click", this.showDetailsCard.bind(this, this.articles[i]))
-              .bindPopup(popupInfo, this.customOptions)
-              .on('mouseover', function (e) { this.openPopup() })
-              .on('mouseout', function (e) { this.closePopup() })
+    this.setSearchMethod(this.output)
+    //   switch (this.searchMethod) {
+    //     case ("title"):
+    //       console.log("case" + this.searchMethod)
+    //       // this.searchArticleByTitle()
+    //       console.log("searchMethodafter: " + this.searchMethod)
+    //       this.articlesApiService.getArticleByTitle(this.searchTitleWord).subscribe(data => {
+    //         this.articles = data
+    //         console.log(this.articles)
+    //       }, (error) => {
+    //         console.log(error)
+    //       }, () => {
+    //         this.showPins(this.articles)
+    //       })
+    //       break
+    //     default:
+    //     // case ("all"):
+    //     console.log("case default")
+    //   this.dataSub = this.articlesApiService.getAllArticles().subscribe(data => {
+    //     this.articles = data
+    //     console.log(this.articles)
+    //   }, (error) => {
+    //     console.log(error)
+    //   }, () => {
+    //     this.showPins(this.articles)
+    //   })
+    // }
 
-            markerCluster.addLayer(pins)
 
-          }
-        }
-      }
-    })
-    mymap.addLayer(markerCluster)
+    // this.mymap.addLayer(this.markerCluster)
 
     this.closeDetailsCard()
     // this.getArticleById(this.pmid)
@@ -134,42 +146,153 @@ export class MapComponent implements OnInit {
       div.innerHTML += '<img src=/assets/pins/pins_icons/yellowpinIcon.png></img><span>  Intermediate author</span><br>';
       return div;
     };
-    legend.addTo(mymap);
+    legend.addTo(this.mymap);
 
 
+    var filter = document.getElementById("checkbox").click
+    console.log("filter " + filter)
+  }
+
+  ////// END OF ngOnInit  ////////
+
+
+  showPins(articles: Article[]) {
+    for (let i in articles) {
+      for (let j in articles[i].authorsList) {
+        if (articles[i].authorsList[j].latitude != 0 && articles[i].authorsList[j].longitude != 0) {
+          const popupInfo = `<center><span class='author'> ${articles[i].authorsList[j].lastName} ${articles[i].authorsList[j].foreName}</span><br>
+        <span class='adress'> ${articles[i].authorsList[j].googleFormatedAdress}</span><br>
+        <span class='email'>email: ${articles[i].authorsList[j].email}</span>`
+          let authorRank = j;
+          let markerPin
+          switch (authorRank) {
+            case ((articles[i].authorsList.length - 1).toString()):
+              markerPin = this.redpin
+              break
+            case ('0'):
+              markerPin = this.bluepin
+              break
+            default:
+              markerPin = this.yellowpin
+          }
+          let pins = this.marker(L.latLng(articles[i].authorsList[j].latitude, articles[i].authorsList[j].longitude), { icon: markerPin, riseOnHover: true })
+            .on("click", this.showDetailsCard.bind(this, articles[i]))
+            .bindPopup(popupInfo, this.customOptions)
+            .on('mouseover', function (e) { this.openPopup() })
+            .on('mouseout', function (e) { this.closePopup() })
+
+          this.markerCluster.addLayer(pins)
+        }
+      }
+    }
+    this.mymap.addLayer(this.markerCluster)
   }
 
 
-// showPins(articles: Article[]) {
-//   for (let i in articles) {
-//     for (let j in articles[i].authorsList) {
-//       if (articles[i].authorsList[j].latitude != 0 && articles[i].authorsList[j].longitude != 0) {
-//         const popupInfo = `<center><span class='author'> ${articles[i].authorsList[j].lastName} ${articles[i].authorsList[j].foreName}</span><br>
-//         <span class='adress'> ${articles[i].authorsList[j].googleFormatedAdress}</span>`
-//         let authorRank = j;
-//         let markerPin
-//         switch (authorRank) {
-//           case ((articles[i].authorsList.length - 1).toString()):
-//             markerPin = this.redpin
-//             break
-//           case ('0'):
-//             markerPin = this.bluepin
-//             break
-//           default:
-//             markerPin = this.yellowpin
-//         }
-//         let pins = this.marker(L.latLng(articles[i].authorsList[j].latitude, articles[i].authorsList[j].longitude), { icon: markerPin, riseOnHover: true })
-//           .on("click", this.showDetailsCard.bind(this, articles[i]))
-//           .bindPopup(popupInfo, this.customOptions)
-//           .on('mouseover', function (e) { this.openPopup() })
-//           .on('mouseout', function (e) { this.closePopup() })
+  getFilter() {
+    var selectElement = <HTMLInputElement>document.querySelector('#selectMenu');
+    this.output = selectElement.value;
+    console.log("select value: " + this.output)
+    this.query = (document.getElementById("searchText") as HTMLInputElement).value
+    console.log("searchTitleWord: " + this.query)
+    this.setSearchMethod(this.output)
+  }
 
-//         this.markerCluster.addLayer(pins)
+  updateSearchBar() {
+    var selectElement = <HTMLInputElement>document.querySelector('#selectMenu');
+    if (selectElement.value != "no filter"){
+      (document.getElementById("searchText") as HTMLOptionElement).disabled = false;
+      (document.getElementById("searchText") as HTMLInputElement).placeholder = `Search by ${selectElement.value}`;
+      (document.getElementById("searchButton") as HTMLOptionElement).disabled = false;
+    } else {
+      (document.getElementById("searchText") as HTMLOptionElement).disabled = true;
+      (document.getElementById("searchText") as HTMLInputElement).placeholder = "Search in title, abstract or by author ...";
+      (document.getElementById("searchButton") as HTMLOptionElement).disabled = true;
+    }
+  }
 
-//       }
-//     }
-//   }
-// }
+  setSearchMethod(searchMethod: string) {
+    switch (searchMethod) {
+      case ("title"):
+        console.log("case " + searchMethod)
+        this.searchArticleByTitle()
+        break
+      case ("abstract"):
+        console.log("case " + searchMethod)
+        this.searchArticleByabstract()
+        break
+      case ("author"):
+        console.log("case " + searchMethod)
+        this.searchArticleByAuthor()
+        break
+      // default:
+      case ("all"):
+        this.markerCluster.clearLayers()
+        this.dataSub = this.articlesApiService.getAllArticles().subscribe(data => {
+          this.articles = data
+          console.log(this.articles)
+        }, (error) => {
+          console.log(error)
+        }, () => {
+          this.showPins(this.articles)
+        })
+    }
+  }
+
+  searchArticleByTitle() {
+    // this.searchMethod = "title"
+    this.markerCluster.clearLayers()
+    this.articlesApiService.getArticleByTitle(this.query).subscribe(data => {
+      this.articles = data
+      console.log(this.articles)
+    }, (error) => {
+      console.log(error)
+    }, () => {
+      this.showPins(this.articles)
+    })
+  }
+
+  searchArticleByabstract() {
+    // this.searchMethod = "abstract"
+    this.markerCluster.clearLayers()
+    this.articlesApiService.getArticleByAbstract(this.query).subscribe(data => {
+      this.articles = data
+      console.log(this.articles)
+    }, (error) => {
+      console.log(error)
+    }, () => {
+      this.showPins(this.articles)
+    })
+  }
+
+  searchArticleByAuthor() {
+    // this.searchMethod = "author"
+    this.markerCluster.clearLayers()
+    this.articlesApiService.getArticleByAuthor(this.query).subscribe(data => {
+      this.articles = data
+      console.log(this.articles)
+    }, (error) => {
+      console.log(error)
+    }, () => {
+      this.showPins(this.articles)
+    })
+  }
+
+  searchAllArticles() {
+    this.markerCluster.clearLayers();
+    (document.getElementById("searchText") as HTMLInputElement).value = '';
+    (document.getElementById("searchText") as HTMLInputElement).placeholder = "Search in title, abstract or by author ...";
+    (document.getElementById("searchText") as HTMLOptionElement).disabled = true;
+    (document.getElementById('noFilter') as HTMLOptionElement).selected = true
+    this.dataSub = this.articlesApiService.getAllArticles().subscribe(data => {
+      this.articles = data
+      console.log(this.articles)
+    }, (error) => {
+      console.log(error)
+    }, () => {
+      this.showPins(this.articles)
+    })
+  }
 
   customOptions = {
     'maxWidth': 1000,
@@ -216,54 +339,12 @@ export class MapComponent implements OnInit {
   }
 
   addFavoriteArticle() {
-    this.favoriteArticle._id = sessionStorage.getItem('_id')
-    this.favoriteArticle.username = this.tokenStorage.getUsername()
-    this.authService.addArticle(this.favoriteArticle).subscribe(
-      data => {
-        console.log(`${this.favoriteArticle.username} add the article with id ${this.favoriteArticle._id}`)
-      }
+    let username = this.tokenStorage.getUsername()
+    let articlePmid = this.article._id
+    this.favoriteService.addFavorite(username, articlePmid).subscribe(
+      favorite => (this.favoriteArticle = favorite),
+      error => { console.log(error)}
     )
-  }
-
-  
-
-  findArticleByTitle(wordTitle) {
-    this.articlesApiService.getArticleByTitle(wordTitle).subscribe(data => {
-      this.articles = data
-      console.log(this.articles)
-    }, (error) => {
-      console.log(error)
-    })
+    console.log("user: "+ username + "articlePMID: " + articlePmid)
   }
 }
-
-
-  // get id of an article 
-  // getArticlePmid(article: Article) {
-  //   console.log(this.articlePmid)
-  // this.articlePmid = article._id.toString()
-  // sessionStorage.setItem("id", this.articlePmid)
-  // this._router.navigate(['/articleDetails', this.articlePmid])
-  // }
-
-
-  // find an article by id
-  // findArticlebyPmid(id: string) {
-  //   this.articlesApiService.getIdArticle(id).subscribe(
-  //     data => { this.article = data }
-  //   )
-  // }
-  // mymap.panTo(L.latLng(this.geoloc[0].latitude,this.geoloc[0].longitude))
-  // })
-
-
-
-
-
-  // add a search bar for adress
-  // const searchControl = new GeoSearchControl({
-  //   style: 'button',
-  //   provider: new OpenStreetMapProvider(),
-  //   autoComplete: false,
-  // });
-  // mymap.addControl(searchControl)

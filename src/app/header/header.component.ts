@@ -11,7 +11,7 @@ export class HeaderComponent implements OnInit {
   titre: string = "Pubmed World"
   info: any
   private roles: string[];
-   authority: string;
+  authority: string;
 
   constructor(private tokenStorage: TokenStorageService) { }
 
@@ -28,11 +28,11 @@ export class HeaderComponent implements OnInit {
         if (role === 'ROLE_ADMIN') {
           this.authority = 'admin';
           return false;
-        // } else if (role === 'ROLE_PM') {
-        //   this.authority = 'pm';
-        //   return false;
-        // }
-         } else this.authority = 'user';
+          // } else if (role === 'ROLE_PM') {
+          //   this.authority = 'pm';
+          //   return false;
+          // }
+        } else this.authority = 'user';
         return true;
       });
     }
@@ -40,7 +40,12 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     this.tokenStorage.signOut();
-    window.location.reload();
+    window.location.replace("/")
+    // window.location.reload();
+  }
+
+  userAccount() {
+    window.location.replace("userAccount");
   }
 
 }
