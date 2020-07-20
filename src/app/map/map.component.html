@@ -1,153 +1,96 @@
 <div class="container">
-    <br />
-    <div class="row justify-content-center">
-        <div class="col-12 col-md-10 col-lg-8">
-            <form class="card card-sm">
-                <div class="card-body row no-gutters align-items-center">
-                    <!-- <div class="col-auto">
-                        <i class="fas fa-search h4 text-body"></i>
-                    </div> -->
-
-
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <!-- <button class="btn btn-outline-secondary dropdown-toggle"  type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Search by</button> -->
-                            <select id="selectMenu" (change)="updateSearchBar()">
-                                <option value="no filter" id="noFilter" selected>No filter</option>
-                                <option value="title">Title</option>
-                                <option value="author">Author</option>
-                                <option value="abstract">Abstract</option>
-                            </select>
+        <div class="row">
+            <div class="col-sm-3 col-md-3">
+                <div class="panel-group" id="accordion">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><span
+                                        class="glyphicon glyphicon-folder-close">
+                                    </span>Content</a>
+                            </h4>
                         </div>
-                        <input type="text" id="searchText" 
-                            aria-label="Text input with dropdown button"
-                            placeholder="Search in title, abstract or by author ...">
-                        <div class="col-auto">
-                            <button class="btn btn-lg btn-success" type="submit" (click)="getFilter()">Search</button>
+                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                            data-parent="#accordion">
+                            <div class="card-body row no-gutters align-items-center" id="searchBox">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <!-- <button class="btn btn-outline-secondary dropdown-toggle"  type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Search by</button> -->
+                                        <select id="selectMenu" (change)="updateSearchBar()">
+                                            <option value="no filter" id="noFilter" selected>No filter</option>
+                                            <option value="title">Title</option>
+                                            <option value="author">Author</option>
+                                            <option value="abstract">Abstract</option>
+                                        </select>
+                                        <input type="text" id="searchText" aria-label="Text input with dropdown button"
+                                            placeholder="Search in title, abstract or by author ...">
+                                        <button class="btn btn-primary" id="searchButton" type="submit"
+                                            (click)="getFilter()">
+                                            <span class="material-icons">
+                                                search
+                                            </span></button>
+
+                                        <button class="btn" id="resetButton" type="submit"
+                                            (click)="searchAllArticles()"><span class="material-icons">
+                                                cancel
+                                            </span></button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
-                    <!-- <input type="text" class="form-control" aria-label="Text input with radio button"
-                        placeholder="zrzr"> -->
-                    <!-- </div> -->
-
-                    <!-- <div class="example-container">
-                    <form [formGroup]="options">
-                        <div>
-                            <label id="example-radio-group-label"><strong>Search box</strong></label>
-                            <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
-                                [(ngModel)]="searchFilter" name="searchFilter" [formControl]="floatLabelControl">
-                                <mat-radio-button class="example-radio-button" name="AllArticles" value="AllArticles"
-                                    checked="checked">All articles</mat-radio-button>
-                                <mat-radio-button name="Title" value="Title">Title</mat-radio-button>
-                                <mat-radio-button name="Abstract" value="Abstract">Abstract</mat-radio-button>
-                                <mat-radio-button name="Keywords" value="Keywords">Keywords</mat-radio-button>
-                                <mat-radio-button name="Author" value="Author">Author</mat-radio-button>
-                                <mat-radio-button name="Journal" value="Journal">Journal</mat-radio-button>
-                                <mat-radio-button name="Date" value="Date">Date</mat-radio-button>
-                                <mat-radio-button class="example-radio-button" *ngFor="let filter of filters"
-                                    [value]="filter">{{searchFilter}}</mat-radio-button>
-                            </mat-radio-group>
-                        </div>
-                    </form>
-                </div> -->
-
-                    <!-- <div class="col">
-                        <input [(ngModel)]="searchTitleWord"
-                            class="form-control form-control-lg form-control-borderless" name="titleWord" type="search"
-                            placeholder="Search in title">
-                    </div>
-                    <div class="col-auto">
-                        <button class="btn btn-lg btn-success" type="submit"
-                        (click)="searchArticleByTitle()">Search</button>
-                    </div>
-                    </div>
-                                    <div class="card-body row no-gutters align-items-center">
-                    <div class="col">
-                        <input [(ngModel)]="searchAbstract"
-                            class="form-control form-control-lg form-control-borderless" name="abstractWord" type="search"
-                            placeholder="Search in abstract">
-                    </div>
-                    <div class="col-auto">
-                        <button class="btn btn-lg btn-success" type="submit"
-                            (click)="searchArticleByabstract()">Search</button>
-                    </div>
-                    <div class="col"> -->
-                    <!-- <input [(ngModel)]="searchKeyword"
-                            class="form-control form-control-lg form-control-borderless" name="keyword" type="search"
-                            placeholder="Search a keyword">
-                    </div>
-                    <div class="col-auto">
-                        <button class="btn btn-lg btn-success" type="submit"
-                            (click)="searchArticleByKeyword()">Search</button> -->
-                    <!-- </div>
-                    <div class="col">
-                        <input [(ngModel)]="searchAuthor"
-                            class="form-control form-control-lg form-control-borderless" name="author" type="search"
-                            placeholder="Search an author">
-                    </div>
-                    <div class="col-auto">
-                        <button class="btn btn-lg btn-success" type="submit"
-                            (click)="searchArticleByAuthor()">Search</button>
-                    </div> -->
-                    <div class="col-auto">
-                        <button class="btn btn-lg btn-success" type="submit" (click)="searchAllArticles()">Reset
-                            search</button>
-                    </div>
-                </div>
-            </form>
+                    <!-- </form> -->
+            </div>
         </div>
     </div>
-</div>
-<br>
+    </div>
+    <!-- <br> -->
+    <div id="mapid"></div>
 
-
-
-
-<div id="mapid"></div>
-
-<!-- card "articleDetails"> -->
-<div class="container">
-    <div class="card bg-light mb-3" style="width: 30rem;" id=cardArticle>
-        <a class="material-icons royalblue" type="button" aria-hidden="true" id="closeButton"
-            (onclick)="closeDetailsCard">cancel</a>
-        <a type="button">
-            <span class="material-icons royalblue" aria-hidden="true" (onclick)="addFavoriteArticle">stars</span>
-        </a>
-        <h5>{{article.articleTitle}}</h5>
-        <br>
-        <div class="row">
-            <div class="col-12">
-                <nav>
-                    <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                        <a class="nav-item active nav-link flex-sm-fill" id="nav-article" href="#articleDetails"
-                            data-toggle="tab" role="tab" aria-controls="nav-article" aria-selected="true">Article
-                            details</a>
-                        <a class="nav-item nav-link flex-sm-fill" id="nav-abstract" href="#articleAbstract"
-                            data-toggle="tab" role="tab" aria-controls="nav-abstract" aria-selected="true">Abstract</a>
+    <!-- card "articleDetails"> -->
+    <div class="container">
+        <div class="card bg-light mb-3" style="width: 30rem;" id=cardArticle>
+            <a class="material-icons royalblue" type="button" aria-hidden="true" id="closeButton"
+                (onclick)="closeDetailsCard">cancel</a>
+            <a type="button">
+                <span class="material-icons royalblue" aria-hidden="true" (click)="addFavoriteArticle()">stars</span>
+            </a>
+            <h5>{{article.articleTitle}}</h5>
+            <br>
+            <div class="row">
+                <div class="col-12">
+                    <nav>
+                        <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                            <a class="nav-item active nav-link flex-sm-fill" id="nav-article" href="#articleDetails"
+                                data-toggle="tab" role="tab" aria-controls="nav-article" aria-selected="true">Article
+                                details</a>
+                            <a class="nav-item nav-link flex-sm-fill" id="nav-abstract" href="#articleAbstract"
+                                data-toggle="tab" role="tab" aria-controls="nav-abstract"
+                                aria-selected="true">Abstract</a>
+                        </div>
+                    </nav>
+                    <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+                        <div class="tab-pane show active fade" id="articleDetails" role="tabpanel"
+                            aria-labelledby="nav-article-tab">
+                            <h6 class="card-subtitle mb-2 text-muted">Journal </h6>
+                            <h6>{{article.journal}}</h6><br>
+                            <h6 class="card-subtitle mb-2 text-muted">Revision date </h6>
+                            <h6>{{article.revisionDate}}</h6><br>
+                            <h6 class="card-subtitle mb-2 text-muted">Keywords </h6>
+                            <h6>{{article.keywordsList}}</h6>
+                        </div>
+                        <div class="tab-pane card-body" id="articleAbstract" role="tabpanel"
+                            aria-labelledby="nav-abstract-tab">
+                            <h6 class="card-subtitle mb-2 text-muted">Abstract</h6>
+                            <textarea class="card-text">{{article.articleAbstract}}</textarea>
+                        </div>
                     </div>
-                </nav>
-                <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
-                    <div class="tab-pane show active fade" id="articleDetails" role="tabpanel"
-                        aria-labelledby="nav-article-tab">
-                        <h6 class="card-subtitle mb-2 text-muted">Journal </h6>
-                        <h6>{{article.journal}}</h6><br>
-                        <h6 class="card-subtitle mb-2 text-muted">Revision date </h6>
-                        <h6>{{article.revisionDate}}</h6><br>
-                        <h6 class="card-subtitle mb-2 text-muted">Keywords </h6>
-                        <h6>{{article.keywordsList}}</h6>
+                    <div class="card-footer border-light mb-3 text-center">
+                        <a href={{article.pubmedUrl}} class="btn" role="button" target="_blank"
+                            rel="noopener noreferrer">Go
+                            to pubmed</a>
                     </div>
-                    <div class="tab-pane card-body" id="articleAbstract" role="tabpanel"
-                        aria-labelledby="nav-abstract-tab">
-                        <h6 class="card-subtitle mb-2 text-muted">Abstract</h6>
-                        <textarea class="card-text">{{article.articleAbstract}}</textarea>
-                    </div>
-                </div>
-                <div class="card-footer border-light mb-3 text-center">
-                    <a href={{article.pubmedUrl}} class="btn" role="button" target="_blank" rel="noopener noreferrer">Go
-                        to pubmed</a>
                 </div>
             </div>
         </div>
     </div>
-</div>

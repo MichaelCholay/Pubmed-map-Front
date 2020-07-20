@@ -1,7 +1,8 @@
 #mapid {
-    height: 700px;
+    height: 650px;
     width: 100%;
-    position:relative;
+    align-content: center;
+    // position:relative;
     z-index: 0;
 }
 
@@ -110,6 +111,7 @@ textarea:focus {
 .btn {
   color:#FFF;
   background-color: royalblue !important;
+  border-radius: 10px;
 }
 
 .btn:hover {
@@ -131,52 +133,36 @@ textarea:focus {
     outline:none;
 }
 
-
-/////////////////////////////////
-
-.counter
-{
-    background-color: #eaecf0;
-    text-align: center;
-}
-.employees,.customer,.design,.order
-{
-    margin-top: 70px;
-    margin-bottom: 70px;
-}
-.counter-count
-{
-    font-size: 18px;
-    background-color: royalblue;
-    border-radius: 50%;
-    position: relative;
-    color: #ffffff;
-    text-align: center;
-    line-height: 92px;
-    width: 92px;
-    height: 92px;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    -ms-border-radius: 50%;
-    -o-border-radius: 50%;
-    display: inline-block;
+#resetButton {
+  color:#FFF;
+  background-color: grey !important;
+  display: flex;
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
 }
 
-.employee-p,.customer-p,.order-p,.design-p
-{
-    font-size: 24px;
-    color: #000000;
-    line-height: 34px;
+#searchButton {
+  color:#FFF;
+  background-color:royalblue !important;
+  display: flex;
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
 }
 
+#selectMenu {
+  color:#FFF;
+  background-color:royalblue !important;
+  border-radius: 10px;
+  text-align-last: center;
+}
 
+#searchText {
+  border-radius: 10px;
+  width: 350px;
+}
 
-// .btn-primary:focus {
-//   color: red;
-//   background-color: orange !important;
-// }
-
-// .btn-primary:active {
-//   color: white;
-//   background-color: green !important;
-// }
+#container {
+  z-index: 1;
+}

@@ -14,6 +14,7 @@ import { AuthService } from '../common/service/auth/auth.service';
 import { NgModel, FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { normalizePassiveListenerOptions } from '@angular/cdk/platform';
+import { FavorisService } from '../common/service/favoris.service';
 
 
 @Component({
@@ -56,14 +57,15 @@ export class MapComponent implements OnInit {
   yellowpin = L.icon({ iconUrl: '/assets/pins/yellowpin.png', iconSize: [40, 60], iconAnchor: [20, 60], popupAnchor: [0, -30] })
 
 
-  constructor(private articlesApiService: ArticlesApiService, private tokenStorage: TokenStorageService, private authService: AuthService) { }
+  constructor(private articlesApiService: ArticlesApiService, private tokenStorage: TokenStorageService, private favoriteService: FavorisService) { }
 
   ngOnInit(): void {
 
     (document.getElementById("searchText") as HTMLOptionElement).disabled = true;
+    (document.getElementById("searchButton") as HTMLOptionElement).disabled = true;
 
     // Set map on Paris
-    this.mymap = L.map('mapid', { scrollWheelZoom: false }).setView([48.833, 2.333], 2).addControl(L.control.scale());
+    this.mymap = L.map('mapid', { scrollWheelZoom: false }).setView([48.833, 2.333], 3).addControl(L.control.scale());
 
     // List of layers
     var Esri_WorldGrayCanvas = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
@@ -200,10 +202,12 @@ export class MapComponent implements OnInit {
     var selectElement = <HTMLInputElement>document.querySelector('#selectMenu');
     if (selectElement.value != "no filter"){
       (document.getElementById("searchText") as HTMLOptionElement).disabled = false;
-      (document.getElementById("searchText") as HTMLInputElement).placeholder = `Search by ${selectElement.value}`
+      (document.getElementById("searchText") as HTMLInputElement).placeholder = `Search by ${selectElement.value}`;
+      (document.getElementById("searchButton") as HTMLOptionElement).disabled = false;
     } else {
       (document.getElementById("searchText") as HTMLOptionElement).disabled = true;
-      (document.getElementById("searchText") as HTMLInputElement).placeholder = "Search in title, abstract or by author ..."
+      (document.getElementById("searchText") as HTMLInputElement).placeholder = "Search in title, abstract or by author ...";
+      (document.getElementById("searchButton") as HTMLOptionElement).disabled = true;
     }
   }
 
@@ -277,6 +281,8 @@ export class MapComponent implements OnInit {
   searchAllArticles() {
     this.markerCluster.clearLayers();
     (document.getElementById("searchText") as HTMLInputElement).value = '';
+    (document.getElementById("searchText") as HTMLInputElement).placeholder = "Search in title, abstract or by author ...";
+    (document.getElementById("searchText") as HTMLOptionElement).disabled = true;
     (document.getElementById('noFilter') as HTMLOptionElement).selected = true
     this.dataSub = this.articlesApiService.getAllArticles().subscribe(data => {
       this.articles = data
@@ -333,12 +339,12 @@ export class MapComponent implements OnInit {
   }
 
   addFavoriteArticle() {
-    this.favoriteArticle._id = sessionStorage.getItem('_id')
-    this.favoriteArticle.username = this.tokenStorage.getUsername()
-    this.authService.addArticle(this.favoriteArticle).subscribe(
-      data => {
-        console.log(`${this.favoriteArticle.username} add the article with id ${this.favoriteArticle._id}`)
-      }
+    let username = this.tokenStorage.getUsername()
+    let articlePmid = this.article._id
+    this.favoriteService.addFavorite(username, articlePmid).subscribe(
+      favorite => (this.favoriteArticle = favorite),
+      error => { console.log(error)}
     )
+    console.log("user: "+ username + "articlePMID: " + articlePmid)
   }
 }
