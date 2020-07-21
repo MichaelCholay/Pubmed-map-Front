@@ -8,8 +8,8 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class FavorisService {
-  // private hostUrl = 'https://pubmed-map-spring-jwt.herokuapp.com';
-  private jwtUrl = environment.jwtHost;
+  private jwtUrl = 'https://pubmed-map-spring-jwt.herokuapp.com';
+  // private jwtUrl = environment.jwtHost;
   
 
   constructor(private http: HttpClient) { }
