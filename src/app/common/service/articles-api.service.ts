@@ -13,9 +13,9 @@ import { environment } from "./../../../environments/environment";
 @Injectable()
 export class ArticlesApiService {
   articles: Article[];
-  articleHost = environment.articleHost
+  // articleHost = environment.articleHost
   
-  // hostSpring = 'https://pubmed-map-spring-article.herokuapp.com'
+  articleHost = 'https://pubmed-map-spring-article.herokuapp.com'
 
   constructor(private httpClient: HttpClient) { }
 

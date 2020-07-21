@@ -17,7 +17,8 @@ const httpOptions = {
 })
 export class AuthService {
 
- jwtHost = environment.jwtHost
+//  jwtHost = environment.jwtHost
+ jwtHost = 'https://pubmed-map-spring-jwt.herokuapp.com'
   private loginUrl = `${this.jwtHost}/api-auth/signin`;
   private signupUrl = `${this.jwtHost}/api-auth/signup`;
   // private addFavoriteUrl = 'https://pubmed-map-spring-jwt.herokuapp.com/api-auth/myFavoriteArticles';
