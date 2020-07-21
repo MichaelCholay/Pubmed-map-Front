@@ -45,10 +45,11 @@
         </div> -->
           </div>
           <div class="form-group">
-            <a routerLink="/userAccount">
+            <a routerLink="/login">
             <button class="btn" id=registerButton [disabled]="!f.valid" (click)="onSubmit()">Register</button></a>
             <a routerLink="/login">
             <button class="btn btn-secondary" >Cancel</button></a>
+            <div *ngIf="f.valid" class="alert alert-success">Signup form valid - please click register and login</div>
             <div *ngIf="f.submitted && isSignUpFailed" class="alert alert-warning">
               Signup failed!<br />{{errorMessage}}
             </div>
