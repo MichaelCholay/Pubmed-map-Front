@@ -3,7 +3,6 @@ import * as L from 'leaflet';
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
 import { GoogleProvider } from 'leaflet-geosearch';
 import { ArticlesApiService } from '../common/service/articles-api.service';
-// import { GeolocService } from '../common/service/geoloc.service';
 import "leaflet.markercluster";
 import { Article } from '../common/model/article';
 import { Geoloc } from '../common/model/geoloc';
@@ -36,18 +35,11 @@ export class MapComponent implements OnInit {
   favoriteArticle: ArticleResponse = new ArticleResponse
   searchMethod: string
   query: string = null;
-  // searchTitleWord: string = null;
-  // searchAbstract: string = null;
-  // searchKeyword: string = null;
-  // searchAuthor: string = null;
   dataSub: Subscription
   floatLabelControl = new FormControl('auto');
   options: FormGroup;
   output: string = "all";
-  // searchBarDisable: boolean = true;
-  // searchFilter: string = "AllArticles";
-  // selected: string = "AllArticles";
-  // filters: string[] = ['Title', 'Abstract', 'Keywords', 'Author', 'Journal', 'Date'];
+
 
 
   bluepin = L.icon({ iconUrl: '/assets/pins/bluepin.png', iconSize: [40, 60], iconAnchor: [20, 60], popupAnchor: [0, -30] })
@@ -95,43 +87,9 @@ export class MapComponent implements OnInit {
       "black map": CartoDB_DarkMatterNoLabels
     }, {}));
 
-    // add markerCluster
-    // var markerCluster = new L.MarkerClusterGroup()
-
-
     this.setSearchMethod(this.output)
-    //   switch (this.searchMethod) {
-    //     case ("title"):
-    //       console.log("case" + this.searchMethod)
-    //       // this.searchArticleByTitle()
-    //       console.log("searchMethodafter: " + this.searchMethod)
-    //       this.articlesApiService.getArticleByTitle(this.searchTitleWord).subscribe(data => {
-    //         this.articles = data
-    //         console.log(this.articles)
-    //       }, (error) => {
-    //         console.log(error)
-    //       }, () => {
-    //         this.showPins(this.articles)
-    //       })
-    //       break
-    //     default:
-    //     // case ("all"):
-    //     console.log("case default")
-    //   this.dataSub = this.articlesApiService.getAllArticles().subscribe(data => {
-    //     this.articles = data
-    //     console.log(this.articles)
-    //   }, (error) => {
-    //     console.log(error)
-    //   }, () => {
-    //     this.showPins(this.articles)
-    //   })
-    // }
-
-
-    // this.mymap.addLayer(this.markerCluster)
 
     this.closeDetailsCard()
-    // this.getArticleById(this.pmid)
 
     //Legend specific
     var legend = new L.Control({
@@ -225,7 +183,6 @@ export class MapComponent implements OnInit {
         console.log("case " + searchMethod)
         this.searchArticleByAuthor()
         break
-      // default:
       case ("all"):
         this.markerCluster.clearLayers()
         this.dataSub = this.articlesApiService.getAllArticles().subscribe(data => {
@@ -240,7 +197,6 @@ export class MapComponent implements OnInit {
   }
 
   searchArticleByTitle() {
-    // this.searchMethod = "title"
     this.markerCluster.clearLayers()
     this.articlesApiService.getArticleByTitle(this.query).subscribe(data => {
       this.articles = data
@@ -253,7 +209,6 @@ export class MapComponent implements OnInit {
   }
 
   searchArticleByabstract() {
-    // this.searchMethod = "abstract"
     this.markerCluster.clearLayers()
     this.articlesApiService.getArticleByAbstract(this.query).subscribe(data => {
       this.articles = data
@@ -266,7 +221,6 @@ export class MapComponent implements OnInit {
   }
 
   searchArticleByAuthor() {
-    // this.searchMethod = "author"
     this.markerCluster.clearLayers()
     this.articlesApiService.getArticleByAuthor(this.query).subscribe(data => {
       this.articles = data
@@ -309,7 +263,6 @@ export class MapComponent implements OnInit {
 
 
   getArticleById(id) {
-    // this.articlePmid = article._id.toString()
     id = sessionStorage.getItem('_id')
     this.articlesApiService.getArticleByPmid(id).subscribe(
       data => {
