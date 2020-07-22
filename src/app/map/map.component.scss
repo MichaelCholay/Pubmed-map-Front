@@ -6,21 +6,11 @@
     z-index: 0;
 }
 
-// #articleDetails { 
-//     display:none; 
-//     position: absolute;
-//     z-index: 1;
-//     top: 200px;
-//     left: 40px;
-//     border-radius: 10px;
-//     width: 40%;
-// }
-
 #cardArticle {
     display:none; 
     position: absolute;
     z-index: 1;
-    top: 170px;
+    top: 230px;
     left: 40px;
     border-radius: 10px;
     padding-right: 10 px;
@@ -124,7 +114,6 @@ textarea:focus {
 .btn:focus, .btn:active, .btn.active, .open .dropdown-toggle {
   background-color: royalblue; 
   color:#FFF;
-  // border-color: #31347B; 
 }
 
 .material-icons.royalblue { 
