@@ -56,8 +56,8 @@ export class MapComponent implements OnInit {
     (document.getElementById("searchText") as HTMLOptionElement).disabled = true;
     (document.getElementById("searchButton") as HTMLOptionElement).disabled = true;
 
-    // Set map on Paris
-    this.mymap = L.map('mapid', { scrollWheelZoom: false }).setView([48.833, 2.333], 3).addControl(L.control.scale());
+    // Set map to show south countries
+    this.mymap = L.map('mapid', { scrollWheelZoom: false }).setView([35.833, 2.333], 3).addControl(L.control.scale());
 
     // List of layers
     var Esri_WorldGrayCanvas = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
