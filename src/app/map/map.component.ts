@@ -293,6 +293,12 @@ export class MapComponent implements OnInit {
 
   addFavoriteArticle() {
     let username = this.tokenStorage.getUsername()
+    if (username!=null){
+      let starButton = document.getElementById("starButton")
+    starButton.style.color = "darkorange"
+    } else {
+      document.getElementById("errorMessageFavorite").style.display = "inline-flex"
+    }
     let articlePmid = this.article._id
     this.favoriteService.addFavorite(username, articlePmid).subscribe(
       favorite => (this.favoriteArticle = favorite),

@@ -50,7 +50,8 @@
             <a class="material-icons royalblue" type="button" aria-hidden="true" id="closeButton"
                 (onclick)="closeDetailsCard">cancel</a>
             <a type="button">
-                <span class="material-icons royalblue" aria-hidden="true" (click)="addFavoriteArticle()">stars</span>
+                <span id="starButton" class="material-icons royalblue" aria-hidden="true" (click)="addFavoriteArticle()">stars</span>
+                <a id="errorMessageFavorite" style="color: darkred;font-size: smaller;display: none;">&ensp;You must be logged to save favorite article</a>
             </a>
             <h5>{{article.articleTitle}}</h5>
             <br>
