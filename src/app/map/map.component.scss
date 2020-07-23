@@ -127,12 +127,12 @@ textarea:focus {
   border-radius: 10px;
 }
 
-.btn:hover {
-  color:#FFF;
-  background-color: royalblue !important;
-  border-color: grey;
-  border-width: medium;
-}
+// .btn:hover {
+//   color:#FFF;
+//   background-color: royalblue !important;
+//   border-color: grey;
+//   border-width: thin;
+// }
 
 .btn:focus, .btn:active, .btn.active, .open .dropdown-toggle {
   background-color: royalblue; 
