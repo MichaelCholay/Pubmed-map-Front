@@ -276,6 +276,7 @@ export class MapComponent implements OnInit {
   showDetailsCard(article: Article) {
     this.getIdArticle(article)
     let card = document.getElementById("cardArticle");
+    document.getElementById("starButton").style.color = "royalblue"
     if (getComputedStyle(card).display != "none") {
       card.style.display = "none";
     } else {
@@ -293,8 +294,8 @@ export class MapComponent implements OnInit {
 
   addFavoriteArticle() {
     let username = this.tokenStorage.getUsername()
+    let starButton = document.getElementById("starButton")
     if (username!=null){
-      let starButton = document.getElementById("starButton")
     starButton.style.color = "darkorange"
     } else {
       document.getElementById("errorMessageFavorite").style.display = "inline-flex"
