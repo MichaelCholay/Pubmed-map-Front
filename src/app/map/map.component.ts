@@ -108,7 +108,7 @@ export class MapComponent implements OnInit {
 
 
     var filter = document.getElementById("checkbox").click
-    console.log("filter " + filter)
+    // console.log("filter " + filter)
   }
 
   ////// END OF ngOnInit  ////////
@@ -150,9 +150,9 @@ export class MapComponent implements OnInit {
   getFilter() {
     var selectElement = <HTMLInputElement>document.querySelector('#selectMenu');
     this.output = selectElement.value;
-    console.log("select value: " + this.output)
+    // console.log("select value: " + this.output)
     this.query = (document.getElementById("searchText") as HTMLInputElement).value
-    console.log("searchTitleWord: " + this.query)
+    // console.log("searchTitleWord: " + this.query)
     this.setSearchMethod(this.output)
   }
 
@@ -172,22 +172,22 @@ export class MapComponent implements OnInit {
   setSearchMethod(searchMethod: string) {
     switch (searchMethod) {
       case ("title"):
-        console.log("case " + searchMethod)
+        // console.log("case " + searchMethod)
         this.searchArticleByTitle()
         break
       case ("abstract"):
-        console.log("case " + searchMethod)
+        // console.log("case " + searchMethod)
         this.searchArticleByabstract()
         break
       case ("author"):
-        console.log("case " + searchMethod)
+        // console.log("case " + searchMethod)
         this.searchArticleByAuthor()
         break
       case ("all"):
         this.markerCluster.clearLayers()
         this.dataSub = this.articlesApiService.getAllArticles().subscribe(data => {
           this.articles = data
-          console.log(this.articles)
+          // console.log(this.articles)
         }, (error) => {
           console.log(error)
         }, () => {
@@ -200,7 +200,7 @@ export class MapComponent implements OnInit {
     this.markerCluster.clearLayers()
     this.articlesApiService.getArticleByTitle(this.query).subscribe(data => {
       this.articles = data
-      console.log(this.articles)
+      // console.log(this.articles)
     }, (error) => {
       console.log(error)
     }, () => {
@@ -212,7 +212,7 @@ export class MapComponent implements OnInit {
     this.markerCluster.clearLayers()
     this.articlesApiService.getArticleByAbstract(this.query).subscribe(data => {
       this.articles = data
-      console.log(this.articles)
+      // console.log(this.articles)
     }, (error) => {
       console.log(error)
     }, () => {
@@ -224,7 +224,7 @@ export class MapComponent implements OnInit {
     this.markerCluster.clearLayers()
     this.articlesApiService.getArticleByAuthor(this.query).subscribe(data => {
       this.articles = data
-      console.log(this.articles)
+      // console.log(this.articles)
     }, (error) => {
       console.log(error)
     }, () => {
@@ -240,7 +240,7 @@ export class MapComponent implements OnInit {
     (document.getElementById('noFilter') as HTMLOptionElement).selected = true
     this.dataSub = this.articlesApiService.getAllArticles().subscribe(data => {
       this.articles = data
-      console.log(this.articles)
+      // console.log(this.articles)
     }, (error) => {
       console.log(error)
     }, () => {
@@ -257,7 +257,7 @@ export class MapComponent implements OnInit {
   getIdArticle(article: Article) {
     this.articlePmid = article._id
     sessionStorage.setItem("_id", this.articlePmid.toString())
-    console.log(this.articlePmid)
+    // console.log(this.articlePmid)
     this.getArticleById(this.articlePmid)
   }
 
@@ -267,7 +267,7 @@ export class MapComponent implements OnInit {
     this.articlesApiService.getArticleByPmid(id).subscribe(
       data => {
         this.article = data
-        console.log(id)
+        // console.log(id)
         error => { console.log(error) }
       }
     )
@@ -298,6 +298,6 @@ export class MapComponent implements OnInit {
       favorite => (this.favoriteArticle = favorite),
       error => { console.log(error)}
     )
-    console.log("user: "+ username + "articlePMID: " + articlePmid)
+    // console.log("user: "+ username + "articlePMID: " + articlePmid)
   }
 }

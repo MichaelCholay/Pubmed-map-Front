@@ -1,5 +1,5 @@
 #mapid {
-    height: 650px;
+    height: 630px;
     width: 100%;
     align-content: center;
     // position:relative;
@@ -126,7 +126,7 @@ textarea:focus {
   color:#FFF;
   background-color: grey !important;
   display: flex;
-  border-radius: 10px;
+  // border-radius: 10px;
   justify-content: center;
   align-items: center;
 }
@@ -135,7 +135,7 @@ textarea:focus {
   color:#FFF;
   background-color:royalblue !important;
   display: flex;
-  border-radius: 10px;
+  // border-radius: 10px;
   justify-content: center;
   align-items: center;
 }
@@ -143,15 +143,23 @@ textarea:focus {
 #selectMenu {
   color:#FFF;
   background-color:royalblue !important;
-  border-radius: 10px;
+  // border-radius: 10px;
   text-align-last: center;
 }
 
 #searchText {
-  border-radius: 10px;
+  // border-radius: 10px;
   width: 350px;
 }
 
 #container {
   z-index: 1;
 }
+
+#div-search-box{
+  display:flex;
+  flex-direction:row;
+  border:2.5px solid grey;
+  border-radius: 10px;
+}
+

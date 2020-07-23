@@ -61,6 +61,13 @@ label {
     transition-duration: 0.4s;
 }
 
+#cancelButton  {
+  margin: 10px;
+  color: whitesmoke;
+  text-align: right;  
+  transition-duration: 0.4s;
+}
+
 #signupButton:hover {
     background-color: dodgerblue;
     color: white;
